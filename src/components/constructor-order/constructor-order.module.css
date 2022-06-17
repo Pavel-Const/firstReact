@@ -1,0 +1,13 @@
+.block {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 40px;
+    padding: 0 16px;
+}
+.priceBlock {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
