@@ -10,7 +10,7 @@ export const BurgerConstructor = () => {
         <section className={[constructorStyles.main].join(" ")}>
             <div className={constructorStyles.block}>
                 <ConstructorCard
-                    name={data[0].name}
+                    name={`${data[0].name} (верх)`}
                     price={data[0].price}
                     img={data[0].image}
                     type="top"
@@ -29,9 +29,8 @@ export const BurgerConstructor = () => {
                         />
                     ))}
                 </div>
-
                 <ConstructorCard
-                    name={data[0].name}
+                    name={`${data[0].name} (низ)`}
                     price={data[0].price}
                     img={data[0].image}
                     type="bottom"

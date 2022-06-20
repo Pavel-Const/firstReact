@@ -2,9 +2,6 @@ import React from "react";
 import styles from "./ingredient-block.module.css";
 import { IngredientCard } from "../ingredients-card/ingredient-card";
 import PropTypes from "prop-types";
-
-import {} from "@ya.praktikum/react-developer-burger-ui-components";
-
 export const IngredientBlock = (props) => (
     <section className={styles.block}>
         <h2>{props.title}</h2>
