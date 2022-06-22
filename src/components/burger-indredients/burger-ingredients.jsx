@@ -27,10 +27,7 @@ export const BurgerIngredients = () => {
     return (
         <section className={[ingredientStyles.main].join(" ")}>
             <h2 className="text text_type_main-large mt-10">Соберите бургер</h2>
-            <div
-                style={{ display: "flex", minWidth: "600px" }}
-                className={[ingredientStyles.tabs, "mt-5"].join(" ")}
-            >
+            <div className={[ingredientStyles.tabs, "mt-5"].join(" ")}>
                 <Tab
                     value="one"
                     active={current === "one"}

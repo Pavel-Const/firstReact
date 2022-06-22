@@ -26,6 +26,7 @@ export const BurgerConstructor = () => {
                             name={item.name}
                             price={item.price}
                             img={item.image}
+                            group={item.type}
                         />
                     ))}
                 </div>

@@ -7,17 +7,20 @@ import {
 import PropTypes from "prop-types";
 
 export const ConstructorCard = (props) => {
+    console.log(props.group);
     return (
         <>
             {props.type === undefined ? (
-                <div className={styles.item}>
-                    <DragIcon />
-                    <ConstructorElement
-                        text={props.name}
-                        price={props.price}
-                        thumbnail={props.img}
-                    />
-                </div>
+                props.group !== "bun" ? (
+                    <div className={styles.item}>
+                        <DragIcon />
+                        <ConstructorElement
+                            text={props.name}
+                            price={props.price}
+                            thumbnail={props.img}
+                        />
+                    </div>
+                ) : null
             ) : (
                 <div className={[styles.item, "ml-8"].join(" ")}>
                     <ConstructorElement
@@ -34,9 +37,9 @@ export const ConstructorCard = (props) => {
 };
 
 ConstructorCard.propTypes = {
-    img: PropTypes.string,
-    name: PropTypes.string,
-    price: PropTypes.number,
+    img: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
     type: PropTypes.string,
     isLocked: PropTypes.bool,
 };

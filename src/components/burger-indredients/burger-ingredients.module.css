@@ -4,6 +4,10 @@
 .tabs * {
     box-sizing: content-box;
 }
+.tabs {
+    display: flex;
+    min-width: 600px;
+}
 .mainBlock {
     overflow: scroll;
     overflow-x: hidden;

@@ -6,9 +6,9 @@ export const IngredientBlock = (props) => (
     <section className={styles.block}>
         <h2>{props.title}</h2>
         <div className={styles.list}>
-            {props.list.map((item, index) => (
+            {props.list.map((item) => (
                 <IngredientCard
-                    key={index}
+                    key={item._id}
                     src={item.image}
                     price={item.price}
                     name={item.name}
@@ -18,6 +18,6 @@ export const IngredientBlock = (props) => (
     </section>
 );
 IngredientBlock.propTypes = {
-    list: PropTypes.array,
-    title: PropTypes.string,
+    list: PropTypes.array.isRequired,
+    title: PropTypes.string.isRequired,
 };

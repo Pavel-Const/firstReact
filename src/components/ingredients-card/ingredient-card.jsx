@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 
 export const IngredientCard = (props) => (
     <div className={styles.card}>
-        <img src={props.src} alt="" className={styles.image} />
+        <img src={props.src} alt={props.name} className={styles.image} />
         <div className={styles.priceBlock}>
             <span className="text text_type_digits-default">{props.price}</span>
             <CurrencyIcon type="primary" />
@@ -24,7 +24,7 @@ export const IngredientCard = (props) => (
     </div>
 );
 IngredientCard.propTypes = {
-    src: PropTypes.string,
-    name: PropTypes.string,
-    price: PropTypes.number,
+    src: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
 };
