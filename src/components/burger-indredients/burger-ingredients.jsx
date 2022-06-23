@@ -1,15 +1,17 @@
 import React from "react";
 import ingredientStyles from "./burger-ingredients.module.css";
+import PropTypes from "prop-types";
+
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { data } from "../../utils/data";
 import { IngredientBlock } from "../ingredients-block/ingredient-block";
 
-export const BurgerIngredients = () => {
+export const BurgerIngredients = (props) => {
     const [current, setCurrent] = React.useState("one");
+
     let dataBun = [],
         dataMain = [],
         dataSauce = [];
-    data.forEach((item) => {
+    props.data.forEach((item) => {
         switch (item.type) {
             case "bun":
                 dataBun.push(item);
@@ -56,15 +58,30 @@ export const BurgerIngredients = () => {
                 )}
             >
                 {dataBun.length && (
-                    <IngredientBlock title="Булки" list={dataBun} />
+                    <IngredientBlock
+                        title="Булки"
+                        list={dataBun}
+                        openModal={props.openModal}
+                    />
                 )}
                 {dataMain.length && (
-                    <IngredientBlock title="Основа" list={dataMain} />
+                    <IngredientBlock
+                        title="Основа"
+                        list={dataMain}
+                        openModal={props.openModal}
+                    />
                 )}
                 {dataSauce.length && (
-                    <IngredientBlock title="Соусы" list={dataSauce} />
+                    <IngredientBlock
+                        title="Соусы"
+                        list={dataSauce}
+                        openModal={props.openModal}
+                    />
                 )}
             </div>
         </section>
     );
+};
+BurgerIngredients.propTypes = {
+    data: PropTypes.array.isRequired,
 };

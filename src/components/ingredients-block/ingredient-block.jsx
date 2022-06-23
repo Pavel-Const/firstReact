@@ -9,9 +9,11 @@ export const IngredientBlock = (props) => (
             {props.list.map((item) => (
                 <IngredientCard
                     key={item._id}
+                    id={item._id}
                     src={item.image}
                     price={item.price}
                     name={item.name}
+                    openModal={props.openModal}
                 />
             ))}
         </div>

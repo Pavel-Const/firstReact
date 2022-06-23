@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./constructor-order.module.css";
+import PropTypes from "prop-types";
+
 import {
     CurrencyIcon,
     Button,
@@ -19,9 +21,16 @@ export const ConstructorOrder = (props) => {
                 </span>
                 <CurrencyIcon type="primary" />
             </div>
-            <Button type="primary" size="large">
+            <Button
+                type="primary"
+                size="large"
+                onClick={() => props.openModal("order")}
+            >
                 Оформить заказ
             </Button>
         </div>
     );
+};
+ConstructorOrder.propTypes = {
+    openModal: PropTypes.func.isRequired,
 };

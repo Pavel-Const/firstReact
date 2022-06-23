@@ -7,7 +7,6 @@ import {
 import PropTypes from "prop-types";
 
 export const ConstructorCard = (props) => {
-    console.log(props.group);
     return (
         <>
             {props.type === undefined ? (

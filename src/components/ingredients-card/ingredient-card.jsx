@@ -7,7 +7,12 @@ import {
 import PropTypes from "prop-types";
 
 export const IngredientCard = (props) => (
-    <div className={styles.card}>
+    <div
+        className={styles.card}
+        onClick={() => {
+            props.openModal("detail", props.id);
+        }}
+    >
         <img src={props.src} alt={props.name} className={styles.image} />
         <div className={styles.priceBlock}>
             <span className="text text_type_digits-default">{props.price}</span>
@@ -27,4 +32,5 @@ IngredientCard.propTypes = {
     src: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
+    openModal: PropTypes.func.isRequired,
 };

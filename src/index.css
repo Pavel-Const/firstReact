@@ -42,3 +42,7 @@ code {
     max-width: 536px !important;
     min-height: 80px !important;
 }
+.modalOpen {
+    overflow: hidden;
+    padding-right: 15px;
+}

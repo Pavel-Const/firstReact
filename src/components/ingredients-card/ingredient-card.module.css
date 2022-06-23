@@ -5,6 +5,7 @@
     align-items: center;
     gap: 4px;
     position: relative;
+    cursor: pointer;
 }
 .image {
     width: 240px;
