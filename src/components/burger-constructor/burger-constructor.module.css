@@ -1,0 +1,17 @@
+.main {
+    margin-top: 100px;
+    width: 600px;
+}
+.block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.box {
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 464px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

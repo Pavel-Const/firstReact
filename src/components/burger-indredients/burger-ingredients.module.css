@@ -1,0 +1,19 @@
+.main {
+    width: 600px;
+}
+.tabs * {
+    box-sizing: content-box;
+}
+.tabs {
+    display: flex;
+    min-width: 600px;
+}
+.mainBlock {
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 664px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
