@@ -8,7 +8,7 @@ import { IngredientBlock } from "../ingredients-block/ingredient-block";
 export const BurgerIngredients = (props) => {
     const [current, setCurrent] = React.useState("one");
 
-    let dataBun = [],
+    const dataBun = [],
         dataMain = [],
         dataSauce = [];
     props.data.forEach((item) => {

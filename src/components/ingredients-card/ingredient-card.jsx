@@ -10,7 +10,7 @@ export const IngredientCard = (props) => (
     <div
         className={styles.card}
         onClick={() => {
-            props.openModal("detail", props.id);
+            props.openModal("detail", "Детали ингредиента", props.id);
         }}
     >
         <img src={props.src} alt={props.name} className={styles.image} />

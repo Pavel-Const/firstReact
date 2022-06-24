@@ -3,7 +3,7 @@ import orderStyles from "./order-detail.module.css";
 
 export const OrderDetails = () => {
     return (
-        <div className={orderStyles.content}>
+        <div className={[orderStyles.content, "pb-20"].join(" ")}>
             <h2
                 className={[
                     orderStyles.idNum,

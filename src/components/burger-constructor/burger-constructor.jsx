@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import constructorStyles from "./burger-constructor.module.css";
 import { ConstructorCard } from "../constructor-card/constructor-card";
 import { ConstructorOrder } from "../constructor-order/constructor-order";
@@ -38,4 +40,8 @@ export const BurgerConstructor = (props) => {
             <ConstructorOrder openModal={props.openModal} />
         </section>
     );
+};
+
+BurgerConstructor.propTypes = {
+    data: PropTypes.array.isRequired,
 };

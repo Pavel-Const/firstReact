@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export const IngredientDetails = (props) => {
     return (
         <>
-            <div className={styles.content}>
+            <div className={[styles.content, "pb-5"].join(" ")}>
                 <img
                     className={styles.image}
                     src={props.product.image_large}

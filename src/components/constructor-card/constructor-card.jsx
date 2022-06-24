@@ -40,5 +40,6 @@ ConstructorCard.propTypes = {
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     type: PropTypes.string,
+    group: PropTypes.string,
     isLocked: PropTypes.bool,
 };

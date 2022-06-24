@@ -11,13 +11,9 @@
         0px 0px 1px rgba(0, 0, 0, 0.04);
     border-radius: 40px;
     z-index: 5;
+    padding: 40px;
 }
-.main_order {
-    padding: 40px 0;
-}
-.main_detail {
-    padding: 40px 40px 60px 40px;
-}
+
 .btnClose {
     position: absolute;
     top: 63px;

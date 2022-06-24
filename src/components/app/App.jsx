@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import AppHeader from "../app-header/app-header";
 import { BurgerIngredients } from "../burger-indredients/burger-ingredients";
 import { BurgerConstructor } from "../burger-constructor/burger-constructor";
-import ModalMain from "../modal-main/modal-main";
+import { OrderDetails } from "../order-detail/order-detail";
+import { IngredientDetails } from "../ingredient-detail/ingredient-detail";
+import Modal from "../modal/modal";
 import appStyles from "./App.module.css";
 
 const App = () => {
@@ -26,11 +28,17 @@ const App = () => {
         type: "",
         open: false,
         product: {},
+        title: "",
     });
     const url = "https://norma.nomoreparties.space/api/ingredients";
     const loadData = () => {
         fetch(url)
-            .then((response) => response.json())
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка ${res.status}`);
+            })
             .then((json) => {
                 if (json.success) {
                     setDataProduct(json.data);
@@ -47,35 +55,24 @@ const App = () => {
         loadData();
     }, []);
 
-    const openModal = (type, id) => {
-        let product = dataProduct.find((item) => {
+    const openModal = (type, title, id) => {
+        const product = dataProduct.find((item) => {
             return item._id === id;
         });
 
         setModal({
             open: true,
             type: type,
+            title: title,
             product,
         });
-        window.addEventListener("keydown", functionEscape);
-        document.querySelector("body").classList.add("modalOpen");
     };
     const closeModal = () => {
         setModal({
             ...modal,
             open: false,
         });
-        window.removeEventListener("keydown", functionEscape);
-        document.querySelector("body").classList.remove("modalOpen");
     };
-
-    const functionEscape = (event) => {
-        if (event.keyCode === 27) {
-            closeModal();
-            console.log("esc");
-        }
-    };
-
     return (
         <div className="App">
             <AppHeader />
@@ -83,11 +80,16 @@ const App = () => {
                 <BurgerIngredients data={dataProduct} openModal={openModal} />
                 <BurgerConstructor data={dataProduct} openModal={openModal} />
                 {modal.open && (
-                    <ModalMain
-                        type={modal.type}
+                    <Modal
                         closeModal={closeModal}
-                        product={modal.product}
-                    />
+                        isOpen={modal.open}
+                        title={modal.title}
+                    >
+                        {modal.type === "order" && <OrderDetails />}
+                        {modal.type === "detail" && (
+                            <IngredientDetails product={modal.product} />
+                        )}
+                    </Modal>
                 )}
             </main>
         </div>
