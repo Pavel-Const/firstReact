@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./constructor-order.module.css";
 import PropTypes from "prop-types";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getOrderInfo } from "../../services/api/api";
 import {
     CurrencyIcon,
     Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { GET_TOTAL_PRICE } from "../../services/actions/actions";
 
 export const ConstructorOrder = (props) => {
+    const { totalPrice, ingredientListConstructor } = useSelector(
+        (store) => store.getIngredients
+    );
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch({
+            type: GET_TOTAL_PRICE,
+        });
+    }, [ingredientListConstructor]);
+    const open = () => dispatch(getOrderInfo(props.id));
     return (
         <div className={[styles.block].join(" ")}>
             <div className={[styles.priceBlock].join(" ")}>
@@ -17,20 +30,14 @@ export const ConstructorOrder = (props) => {
                         "text text_type_digits-medium",
                     ].join(" ")}
                 >
-                    610
+                    {totalPrice}
                 </span>
                 <CurrencyIcon type="primary" />
             </div>
-            <Button
-                type="primary"
-                size="large"
-                onClick={() => props.openModal("order")}
-            >
+            <Button onClick={open} type="primary" size="large">
                 Оформить заказ
             </Button>
         </div>
     );
 };
-ConstructorOrder.propTypes = {
-    openModal: PropTypes.func.isRequired,
-};
+ConstructorOrder.propTypes = {};

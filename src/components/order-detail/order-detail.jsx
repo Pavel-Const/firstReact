@@ -1,7 +1,8 @@
 /* eslint-disable default-case */
 import orderStyles from "./order-detail.module.css";
+import React from "react";
 
-export const OrderDetails = () => {
+export const OrderDetails = (props) => {
     return (
         <div className={[orderStyles.content, "pb-20"].join(" ")}>
             <h2
@@ -10,7 +11,7 @@ export const OrderDetails = () => {
                     "text text_type_digits-large mt-4",
                 ].join(" ")}
             >
-                034536
+                {props.number}
             </h2>
             <span className="text text_type_main-medium mt-8">
                 идентификатор заказа
