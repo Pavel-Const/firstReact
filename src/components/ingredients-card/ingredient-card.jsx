@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_INGREDIENT_INFO } from "../../services/actions/actions";
 import { useDrag } from "react-dnd";
+import { ingredientType } from "../../services/utils/types";
 
 export const IngredientCard = (props) => {
     const { counter } = useSelector(
@@ -60,7 +61,6 @@ export const IngredientCard = (props) => {
     );
 };
 IngredientCard.propTypes = {
-    src: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
+    ...ingredientType,
+    id: PropTypes.string.isRequired,
 };

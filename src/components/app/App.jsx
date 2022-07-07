@@ -1,5 +1,5 @@
 /* eslint-disable default-case */
-import React, { useEffect } from "react";
+import React from "react";
 import AppHeader from "../app-header/app-header";
 import { BurgerIngredients } from "../burger-indredients/burger-ingredients";
 import { BurgerConstructor } from "../burger-constructor/burger-constructor";

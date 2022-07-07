@@ -20,7 +20,11 @@ export const ConstructorOrder = (props) => {
             type: GET_TOTAL_PRICE,
         });
     }, [ingredientListConstructor]);
-    const open = () => dispatch(getOrderInfo(props.id));
+    const open = () => {
+        if (ingredientListConstructor.buns.length) {
+            return dispatch(getOrderInfo(props.id));
+        }
+    };
     return (
         <div className={[styles.block].join(" ")}>
             <div className={[styles.priceBlock].join(" ")}>
@@ -40,4 +44,6 @@ export const ConstructorOrder = (props) => {
         </div>
     );
 };
-ConstructorOrder.propTypes = {};
+ConstructorOrder.propTypes = {
+    id: PropTypes.string.isRequired,
+};

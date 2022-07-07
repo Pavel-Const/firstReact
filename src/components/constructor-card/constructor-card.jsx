@@ -10,6 +10,7 @@ import {
     CHANGE_PRODUCT_CONSTRUCTOR,
     DELETE_CONSTRUCTOR_ITEM,
 } from "../../services/actions/actions";
+import { ingredientType } from "../../services/utils/types";
 import { useDrag, useDrop } from "react-dnd";
 
 export const ConstructorCard = (props) => {
@@ -80,7 +81,7 @@ export const ConstructorCard = (props) => {
                     <ConstructorElement
                         text={props.name}
                         price={props.price}
-                        thumbnail={props.img}
+                        thumbnail={props.src}
                         handleClose={deletItem}
                     />
                 </div>
@@ -89,7 +90,7 @@ export const ConstructorCard = (props) => {
                     <ConstructorElement
                         text={props.name}
                         price={props.price}
-                        thumbnail={props.img}
+                        thumbnail={props.src}
                         isLocked={true}
                         type={props.type}
                     />
@@ -100,10 +101,7 @@ export const ConstructorCard = (props) => {
 };
 
 ConstructorCard.propTypes = {
-    img: PropTypes.string,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number,
-    type: PropTypes.string,
+    ...ingredientType,
     group: PropTypes.string,
     isLocked: PropTypes.bool,
 };

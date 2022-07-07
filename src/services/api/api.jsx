@@ -1,24 +1,19 @@
 // Наш первый thunk
-import {
-    GET_INGREDIENTS_LIST,
-    GET_CONSTRUCTOR_LIST,
-    GET_INGREDIENT_INFO,
-    DELETE_INGREDIENT_INFO,
-    GET_ORDER_INFO,
-} from "../actions/actions";
+import { GET_INGREDIENTS_LIST, GET_ORDER_INFO } from "../actions/actions";
 
-import { urlIngredients, urlOrder } from "./url";
+import { baseUrl } from "./url";
+
+function checkResponse(res) {
+    if (res.ok) {
+        return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
+}
 
 export function getFeed() {
-    // Воспользуемся первым аргументом из усилителя redux-thunk - dispatch
     return function (dispatch) {
-        fetch(urlIngredients)
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка ${res.status}`);
-            })
+        fetch(`${baseUrl}/ingredients`)
+            .then(checkResponse)
             .then((json) => {
                 if (json.success) {
                     dispatch({
@@ -35,9 +30,8 @@ export function getFeed() {
     };
 }
 export function getOrderInfo(id) {
-    // Воспользуемся первым аргументом из усилителя redux-thunk - dispatch
     return function (dispatch) {
-        fetch(urlOrder, {
+        fetch(`${baseUrl}/orders`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -45,12 +39,7 @@ export function getOrderInfo(id) {
             },
             body: JSON.stringify({ ingredients: id }),
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка ${res.status}`);
-            })
+            .then(checkResponse)
             .then((json) => {
                 if (json.success) {
                     dispatch({

@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getFeed } from "../../services/api/api";
 import { useDrop } from "react-dnd";
+import shortid from "shortid";
+
 import {
     ADD_PRODUCT_CONSTRUCTOR,
     COUNTER_CONSTRUCTOR_ITEM,
@@ -10,6 +12,11 @@ import {
 import constructorStyles from "./burger-constructor.module.css";
 import { ConstructorCard } from "../constructor-card/constructor-card";
 import { ConstructorOrder } from "../constructor-order/constructor-order";
+import {
+    ConstructorEmpty,
+    ConstructorEmptyBottom,
+    ConstructorEmptyTop,
+} from "../constructor-empty/constructor-empty";
 
 export const BurgerConstructor = () => {
     const { ingredientList, ingredientListConstructor } = useSelector(
@@ -54,6 +61,7 @@ export const BurgerConstructor = () => {
                 type: ADD_PRODUCT_CONSTRUCTOR,
                 id: item.id,
                 kind: item.type,
+                newId: shortid.generate(),
             });
         },
     });
@@ -66,17 +74,25 @@ export const BurgerConstructor = () => {
     ingredientListConstructor.other.forEach((item) => {
         arrayId.push(item._id);
     });
+    ingredientListConstructor.buns.forEach((item) => {
+        arrayId.push(item._id);
+    });
+
     return (
         <section className={[constructorStyles.main].join(" ")}>
             <div className={constructorStyles.block}>
                 {ingredientList.load && (
                     <>
-                        <ConstructorCard
-                            name={`${ingredientListConstructor.buns[0].name} (верх)`}
-                            price={ingredientListConstructor.buns[0].price}
-                            img={ingredientListConstructor.buns[0].image}
-                            type="top"
-                        />
+                        {ingredientListConstructor.buns.length ? (
+                            <ConstructorCard
+                                name={`${ingredientListConstructor.buns[0].name} (верх)`}
+                                price={ingredientListConstructor.buns[0].price}
+                                src={ingredientListConstructor.buns[0].image}
+                                type="top"
+                            />
+                        ) : (
+                            <ConstructorEmptyTop name={`Булка (верх)`} />
+                        )}
                         <div
                             className={[
                                 constructorStyles.box,
@@ -93,23 +109,26 @@ export const BurgerConstructor = () => {
                                             id={item._id}
                                             name={item.name}
                                             price={item.price}
-                                            img={item.image}
+                                            src={item.image}
                                         />
                                     )
                                 )
                             ) : (
-                                <ConstructorCard
-                                    name={"Добавьте ингредиент"}
-                                    isLocked={true}
+                                <ConstructorEmpty
+                                    name={"Перенесите ингредиент сюда"}
                                 />
                             )}
                         </div>
-                        <ConstructorCard
-                            name={`${ingredientListConstructor.buns[0].name} (низ)`}
-                            price={ingredientListConstructor.buns[0].price}
-                            img={ingredientListConstructor.buns[0].image}
-                            type="bottom"
-                        />
+                        {ingredientListConstructor.buns.length ? (
+                            <ConstructorCard
+                                name={`${ingredientListConstructor.buns[0].name} (низ)`}
+                                price={ingredientListConstructor.buns[0].price}
+                                src={ingredientListConstructor.buns[0].image}
+                                type="bottom"
+                            />
+                        ) : (
+                            <ConstructorEmptyBottom name={`Булка (низ)`} />
+                        )}
                     </>
                 )}
             </div>

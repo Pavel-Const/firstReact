@@ -9,7 +9,6 @@ import {
     COUNTER_CONSTRUCTOR_ITEM,
     CHANGE_PRODUCT_CONSTRUCTOR,
 } from "../actions/actions";
-import shortid from "shortid";
 
 const initialState = {
     ingredientList: {
@@ -34,32 +33,11 @@ const initialState = {
 export const getIngredients = (state = initialState, action) => {
     switch (action.type) {
         case GET_INGREDIENTS_LIST: {
-            let newOther = [];
-            if (state.ingredientList.load) {
-                newOther = action.dataProduct.map((a) => {
-                    return { ...a };
-                });
-
-                newOther.filter((item) => item.type !== "bun");
-                newOther.forEach((item) => {
-                    item.newId = shortid.generate();
-                });
-                console.log(action.dataProduct);
-            }
-
             return {
                 ...state,
                 ingredientList: {
                     load: true,
                     ingredientData: [...action.dataProduct],
-                },
-                ingredientListConstructor: {
-                    buns: [
-                        [...action.dataProduct].filter(
-                            (item) => item.type === "bun"
-                        )[0],
-                    ],
-                    other: newOther,
                 },
             };
         }
@@ -117,7 +95,7 @@ export const getIngredients = (state = initialState, action) => {
                     })
                     .filter((item) => item._id === action.id)[0];
 
-                newOther.newId = shortid.generate();
+                newOther.newId = action.newId;
 
                 return {
                     ...state,
@@ -139,7 +117,7 @@ export const getIngredients = (state = initialState, action) => {
                 0
             );
             let priceBuns = "";
-            if (state.ingredientList.load) {
+            if (state.ingredientListConstructor.buns.length) {
                 priceBuns = 2 * state.ingredientListConstructor.buns[0].price;
             }
 
