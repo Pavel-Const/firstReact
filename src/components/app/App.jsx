@@ -10,8 +10,15 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Modal from "../modal/modal";
 import appStyles from "./App.module.css";
+import { useDispatch } from "react-redux";
+import { CLOSE_MODAL } from "../../services/actions/actions";
 
 const App = () => {
+    const dispatch = useDispatch();
+    const closeModal = () =>
+        dispatch({
+            type: CLOSE_MODAL,
+        });
     const { ingredientItem, open, title, kind, order } = useSelector(
         (store) => store.getIngredients.modalInfo
     );
@@ -25,7 +32,7 @@ const App = () => {
                 </DndProvider>
 
                 {open && (
-                    <Modal isOpen={open} title={title}>
+                    <Modal isOpen={open} title={title} closeModal={closeModal}>
                         {kind === "order" && <OrderDetails number={order} />}
                         {kind === "detail" && (
                             <IngredientDetails product={ingredientItem[0]} />

@@ -45,5 +45,5 @@ export const ConstructorOrder = (props) => {
     );
 };
 ConstructorOrder.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.array.isRequired,
 };
