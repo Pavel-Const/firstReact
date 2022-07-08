@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import PropTypes, { bool } from "prop-types";
+import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import modalStyles from "./modal.module.css";
 import { ModalOverlay } from "../modal-overlay/modal-overlay";
@@ -23,7 +23,7 @@ const Modal = (props) => {
                 document.querySelector("body").classList.remove("modalOpen");
             };
         }
-    }, [isOpen, props]);
+    }, [isOpen]);
     return ReactDOM.createPortal(
         <>
             <div className={[modalStyles.main].join(" ")}>
@@ -52,7 +52,6 @@ const Modal = (props) => {
 };
 
 Modal.propTypes = {
-    closeModal: PropTypes.func.isRequired,
     isOpen: PropTypes.bool,
     title: PropTypes.string,
 };
