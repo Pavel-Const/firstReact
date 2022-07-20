@@ -56,3 +56,7 @@ code {
     overflow: hidden;
     padding-right: 15px;
 }
+
+.input_size_default {
+    width: 480px !important;
+}

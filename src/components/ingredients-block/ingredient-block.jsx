@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./ingredient-block.module.css";
-import { IngredientCard } from "../ingredients-card/ingredient-card";
+import {IngredientCard} from "../ingredients-card/ingredient-card";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+
 export const IngredientBlock = (props) => {
     return (
         <section className={styles.block}>

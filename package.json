@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.0.5",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.13.1",
     "cors": "^2.8.5",
+    "path-to-regexp": "^1.7.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",

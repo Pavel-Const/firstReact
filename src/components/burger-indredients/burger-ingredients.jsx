@@ -1,14 +1,14 @@
 /* eslint-disable no-lone-blocks */
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import ingredientStyles from "./burger-ingredients.module.css";
-import { useSelector, useDispatch } from "react-redux";
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IngredientBlock } from "../ingredients-block/ingredient-block";
-import { getFeed } from "../../services/api/api";
+import {useSelector, useDispatch} from "react-redux";
+import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import {IngredientBlock} from "../ingredients-block/ingredient-block";
+import {getFeed} from "../../services/api/api";
 
 export const BurgerIngredients = () => {
     const [current, setCurrent] = useState("one");
-    const { ingredientData, load } = useSelector(
+    const {ingredientData, load} = useSelector(
         (store) => store.getIngredients.ingredientList
     );
     const dispatch = useDispatch();
@@ -22,20 +22,20 @@ export const BurgerIngredients = () => {
         dataSauce = [];
     {
         load &&
-            ingredientData.forEach((item) => {
-                switch (item.type) {
-                    case "bun":
-                        dataBun.push(item);
-                        break;
-                    case "main":
-                        dataMain.push(item);
-                        break;
-                    case "sauce":
-                        dataSauce.push(item);
-                        break;
-                    default:
-                }
-            });
+        ingredientData.forEach((item) => {
+            switch (item.type) {
+                case "bun":
+                    dataBun.push(item);
+                    break;
+                case "main":
+                    dataMain.push(item);
+                    break;
+                case "sauce":
+                    dataSauce.push(item);
+                    break;
+                default:
+            }
+        });
     }
     const bunRef = React.useRef();
     const mainRef = React.useRef();

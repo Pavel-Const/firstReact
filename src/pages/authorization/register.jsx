@@ -1,16 +1,37 @@
 import styles from './authorization.module.css'
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
-import {useState} from "react";
+import {Link, Redirect, useLocation} from "react-router-dom";
+import {useState, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {register} from "../../services/api/api";
+import {IS_AUTH} from "../../services/actions/actions";
 
 export const Register = () => {
     const [form, setValue] = useState({name: '', email: '', password: ''});
     const [visiblePassword, setVisible] = useState(false);
+
+    const dispatch = useDispatch();
+    const {userAuth} = useSelector((store) => store.getIngredients);
+    const {state} = useLocation();
     const onChange = e => {
         setValue({...form, [e.target.name]: e.target.value});
     };
     const onIconClick = () => {
         setVisible(!visiblePassword)
+    }
+    const registration = (e) => {
+        e.preventDefault()
+        return dispatch(register(form))
+    }
+    useEffect(() => {
+        dispatch({
+            type: IS_AUTH
+        })
+    }, [])
+    if (userAuth) {
+        return (<Redirect
+            to={state?.from || '/'}
+        />);
     }
     return (
         <div className={[styles.container, 'container'].join(' ')}>
@@ -21,8 +42,8 @@ export const Register = () => {
                 <Input value={form.password} type={visiblePassword ? 'text' : 'password'} name={'password'}
                        placeholder={'Пароль'}
                        onChange={onChange} icon={visiblePassword ? 'HideIcon' : 'ShowIcon'} onIconClick={onIconClick}/>
-                <Button type="primary" size="medium">
-                    Войти
+                <Button type="primary" size="medium" onClick={registration}>
+                    Зарегистрироваться
                 </Button>
             </form>
             <div className={styles.box}>

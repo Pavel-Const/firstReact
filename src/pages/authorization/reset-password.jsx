@@ -1,12 +1,17 @@
 import styles from './authorization.module.css'
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
-import {useState} from "react";
+import {Link, Redirect, useLocation} from "react-router-dom";
+import {useState, useEffect} from "react";
 import {passwordNew} from "../../services/api/api";
+import {useDispatch, useSelector} from "react-redux";
+import {IS_AUTH} from "../../services/actions/actions";
 
 export const ResetPassword = () => {
     const [form, setValue] = useState({pin: '', password: ''});
     const [visiblePassword, setVisible] = useState(false);
+    const dispatch = useDispatch();
+    const {userAuth, passReset} = useSelector((store) => store.getIngredients);
+    const {state} = useLocation();
     const onChange = e => {
         setValue({...form, [e.target.name]: e.target.value});
     };
@@ -16,6 +21,20 @@ export const ResetPassword = () => {
     const onClick = (e) => {
         e.preventDefault()
         passwordNew(form)
+    }
+    useEffect(() => {
+        dispatch({
+            type: IS_AUTH
+        })
+    }, [])
+    if (userAuth) {
+        return (<Redirect
+            to={'/'}
+        />);
+    } else if (!passReset) {
+        return (<Redirect
+            to={'/forgot-password'}
+        />);
     }
     return (
         <div className={[styles.container, 'container'].join(' ')}>

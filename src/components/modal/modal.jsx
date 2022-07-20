@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import modalStyles from "./modal.module.css";
-import { ModalOverlay } from "../modal-overlay/modal-overlay";
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {ModalOverlay} from "../modal-overlay/modal-overlay";
+import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 const modalRoot = document.getElementById("root-modal");
 const Modal = (props) => {
@@ -14,6 +14,7 @@ const Modal = (props) => {
                 props.closeModal();
             }
         }
+
         if (isOpen) {
             document.addEventListener("keydown", closeByEscape);
             document.querySelector("body").classList.add("modalOpen");
@@ -40,19 +41,22 @@ const Modal = (props) => {
                         className={modalStyles.btnClose}
                         onClick={props.closeModal}
                     >
-                        <CloseIcon type="primary" />
+                        <CloseIcon type="primary"/>
                     </button>
                 </div>
                 {props.children}
             </div>
-            <ModalOverlay closeModal={props.closeModal} />
+            <ModalOverlay closeModal={props.closeModal}/>
         </>,
         modalRoot
     );
 };
 
 Modal.propTypes = {
-    isOpen: PropTypes.bool,
+    isOpen: PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.object,
+    ]),
     title: PropTypes.string,
 };
 

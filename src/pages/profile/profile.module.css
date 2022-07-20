@@ -19,6 +19,10 @@
     align-items: center;
 }
 
+.menuLink_active {
+    color: #fff;
+}
+
 .description {
     margin-top: 80px;
     color: #8585AD;
