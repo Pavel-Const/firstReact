@@ -7,7 +7,7 @@ import shortid from "shortid";
 import {
     ADD_PRODUCT_CONSTRUCTOR,
     COUNTER_CONSTRUCTOR_ITEM,
-} from "../../services/actions/actions";
+} from "../../services/actions/actionsIngredients";
 
 import constructorStyles from "./burger-constructor.module.css";
 import { ConstructorCard } from "../constructor-card/constructor-card";
@@ -20,7 +20,7 @@ import {
 
 export const BurgerConstructor = () => {
     const { ingredientList, ingredientListConstructor } = useSelector(
-        (store) => store.getIngredients
+        (store) => store.reduceIngredients
     );
     const dispatch = useDispatch();
 

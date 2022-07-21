@@ -1,14 +1,12 @@
 import {
     GET_INGREDIENTS_LIST,
     GET_INGREDIENT_INFO,
-    GET_ORDER_INFO,
-    CLOSE_MODAL,
     ADD_PRODUCT_CONSTRUCTOR,
     GET_TOTAL_PRICE,
     DELETE_CONSTRUCTOR_ITEM,
     COUNTER_CONSTRUCTOR_ITEM,
     CHANGE_PRODUCT_CONSTRUCTOR,
-} from "../actions/actions";
+} from "../actions/actionsIngredients";
 
 const initialState = {
     ingredientList: {
@@ -21,16 +19,9 @@ const initialState = {
         other: [],
     },
     totalPrice: "",
-    modalInfo: {
-        open: false,
-        kind: "",
-        title: "",
-        ingredientItem: {},
-        order: "",
-    },
 };
 
-export const getIngredients = (state = initialState, action) => {
+export const reduceIngredients = (state = initialState, action) => {
     switch (action.type) {
         case GET_INGREDIENTS_LIST: {
             return {
@@ -51,27 +42,6 @@ export const getIngredients = (state = initialState, action) => {
                     ingredientItem: [
                         ...state.ingredientList.ingredientData,
                     ].filter((item) => item._id === action.id),
-                },
-            };
-        }
-        case GET_ORDER_INFO: {
-            return {
-                ...state,
-                modalInfo: {
-                    open: action.open,
-                    title: "",
-                    kind: "order",
-                    order: action.order,
-                },
-            };
-        }
-        case CLOSE_MODAL: {
-            return {
-                ...state,
-                modalInfo: {
-                    open: false,
-                    ingredientItem: {},
-                    order: "",
                 },
             };
         }
@@ -174,20 +144,3 @@ export const getIngredients = (state = initialState, action) => {
         }
     }
 };
-/* export const getIngredientInfo = (state = initialState, action) => {
-    switch (action.type) {
-        case GET_INGREDIENT_INFO: {
-            console.log(state);
-            return {
-                ...state,
-                modalInfo: [...state.ingredientList.ingredientData].filter(
-                    (item) => item._id === action.id
-                ),
-            };
-        }
-
-        default: {
-            return state;
-        }
-    }
-} */
