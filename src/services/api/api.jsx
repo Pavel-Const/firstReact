@@ -3,9 +3,14 @@ import {
     AUTH_LOGOUT,
     AUTH_REGISTER,
     AUTH_TOKEN,
+    GET_USER_INFO, RESET_PASSWORD, UPDATE_USER_INFO
+} from "../actions/actionsAuthorization";
+import {
     GET_INGREDIENTS_LIST,
-    GET_ORDER_INFO, GET_USER_INFO, RESET_PASSWORD, UPDATE_USER_INFO
-} from "../actions/actions";
+} from "../actions/actionsIngredients";
+import {
+    GET_ORDER_INFO
+} from "../actions/actionsOrder";
 
 import {baseUrl} from "./url";
 import {deleteCookie, setCookie} from "../utils";
@@ -89,11 +94,9 @@ export function passwordReset(form) {
                 alert(error);
             });
     }
-
 }
 
 export function passwordNew(form) {
-
     fetch(`${baseUrl}/password-reset/reset`, {
         method: "POST",
         headers: {
@@ -116,7 +119,6 @@ export function passwordNew(form) {
         .catch((error) => {
             alert(error);
         });
-
 }
 
 export function register(form) {
@@ -289,7 +291,6 @@ export function updateUser(token, form) {
                 "password": form.password,
                 "name": form.name
             }),
-
         })
             .then(checkResponse)
             .then((json) => {

@@ -5,15 +5,15 @@ import {
     Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import {useSelector} from "react-redux";
-import {useDrag} from "react-dnd";
-import {ingredientType} from "../../services/utils/types";
-import {Link, useLocation} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useDrag } from "react-dnd";
+import { ingredientType } from "../../services/utils/types";
+import { Link, useLocation } from "react-router-dom";
 
 export const IngredientCard = (props) => {
     const location = useLocation();
-    const {counter} = useSelector(
-        (store) => store.getIngredients.ingredientList
+    const { counter } = useSelector(
+        (store) => store.reduceIngredients.ingredientList
     );
 
     let count = 0;
@@ -30,33 +30,36 @@ export const IngredientCard = (props) => {
 
     const [, dragRef] = useDrag({
         type: "product",
-        item: {id: props.id, type: props.type},
+        item: { id: props.id, type: props.type },
     });
 
     return (
-        <Link to={{pathname: `/ingredients/${props.id}`, state: {background: location}}}
-              className={styles.card}>
-            <div ref={dragRef}>
-                <img src={props.src} alt={props.name} className={styles.image}/>
-                <div className={styles.priceBlock}>
+        <Link
+            to={{
+                pathname: `/ingredients/${props.id}`,
+                state: { background: location },
+            }}
+            className={styles.card}
+            ref={dragRef}
+        >
+            <img src={props.src} alt={props.name} className={styles.image} />
+            <div className={styles.priceBlock}>
                 <span className="text text_type_digits-default">
                     {props.price}
                 </span>
-                    <CurrencyIcon type="primary"/>
-                </div>
-                <span
-                    className={[styles.name, "text text_type_main-default"].join(
-                        " "
-                    )}
-                >
+                <CurrencyIcon type="primary" />
+            </div>
+            <span
+                className={[styles.name, "text text_type_main-default"].join(
+                    " "
+                )}
+            >
                 {props.name}
             </span>
-                <div className={styles.counter}>
-                    <Counter count={count} size="default"/>
-                </div>
+            <div className={styles.counter}>
+                <Counter count={count} size="default" />
             </div>
         </Link>
-
     );
 };
 IngredientCard.propTypes = {
