@@ -1,0 +1,27 @@
+.container {
+    margin-top: 180px;
+    width: 530px;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    width: 100%;
+}
+
+.form .input_size_default {
+    width: 420px !important;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}

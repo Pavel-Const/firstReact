@@ -2,9 +2,7 @@ import React from "react";
 import styles from "./header-btn.module.css";
 
 const HeaderButton = (props) => (
-    <a href="#" className={[props.styles, styles.button].join(" ")}>
-        {props.children}
-    </a>
+    <p className={[props.styles, styles.button].join(" ")}>{props.children}</p>
 );
 
 export default HeaderButton;

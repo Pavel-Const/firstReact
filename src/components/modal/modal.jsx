@@ -14,6 +14,7 @@ const Modal = (props) => {
                 props.closeModal();
             }
         }
+
         if (isOpen) {
             document.addEventListener("keydown", closeByEscape);
             document.querySelector("body").classList.add("modalOpen");
@@ -52,7 +53,7 @@ const Modal = (props) => {
 };
 
 Modal.propTypes = {
-    isOpen: PropTypes.bool,
+    isOpen: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     title: PropTypes.string,
 };
 

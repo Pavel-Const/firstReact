@@ -9,7 +9,7 @@ import { getFeed } from "../../services/api/api";
 export const BurgerIngredients = () => {
     const [current, setCurrent] = useState("one");
     const { ingredientData, load } = useSelector(
-        (store) => store.getIngredients.ingredientList
+        (store) => store.reduceIngredients.ingredientList
     );
     const dispatch = useDispatch();
 

@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import {
     CHANGE_PRODUCT_CONSTRUCTOR,
     DELETE_CONSTRUCTOR_ITEM,
-} from "../../services/actions/actions";
+} from "../../services/actions/actionsIngredients";
 import { ingredientType } from "../../services/utils/types";
 import { useDrag, useDrop } from "react-dnd";
 

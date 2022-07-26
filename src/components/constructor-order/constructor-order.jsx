@@ -7,22 +7,29 @@ import {
     CurrencyIcon,
     Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { GET_TOTAL_PRICE } from "../../services/actions/actions";
+import { GET_TOTAL_PRICE } from "../../services/actions/actionsIngredients";
+import { useHistory, useLocation } from "react-router-dom";
 
 export const ConstructorOrder = (props) => {
     const { totalPrice, ingredientListConstructor } = useSelector(
-        (store) => store.getIngredients
+        (store) => store.reduceIngredients
     );
+    const { userAuth } = useSelector((store) => store.reduceAuthorization);
+    const history = useHistory();
     const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch({
             type: GET_TOTAL_PRICE,
         });
     }, [ingredientListConstructor]);
     const open = () => {
-        if (ingredientListConstructor.buns.length) {
+        if (ingredientListConstructor.buns.length && userAuth) {
             return dispatch(getOrderInfo(props.id));
+        } else {
+            history.replace({
+                pathname: "/login",
+                state: { from: { pathname: "/" } },
+            });
         }
     };
     return (
