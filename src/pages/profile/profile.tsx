@@ -4,11 +4,13 @@ import {
     Button,
     Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getToken, getUser, logout, updateUser} from "../../services/api/api";
 import {getCookie} from "../../services/utils";
 import {IS_AUTH} from "../../services/actions/actionsAuthorization";
+import {IButton, IPrevent, ITargetValue} from "../../services/utils/types";
+import {Button as ButtonUI} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/button";
 
 export const Profile = () => {
     const {pathname} = useLocation();
@@ -17,22 +19,23 @@ export const Profile = () => {
     const [changeFieldLogin, setChangeFieldLogin] = useState(false);
     const [changeFieldPass, setChangeFieldPass] = useState(false);
     const [changeAll, setChangeAll] = useState(false);
+    const Button: React.FC<IButton> = ButtonUI;
     const {accessToken, loader, user, userAuth} = useSelector(
-        (store) => store.reduceAuthorization
+        (store: any) => store.reduceAuthorization
     );
-    const dispatch = useDispatch();
-    const inputRefName = useRef(null);
-    const inputRefLogin = useRef(null);
-    const inputRefPassword = useRef(null);
-    const logOut = (e) => {
+    const dispatch: any = useDispatch();
+    const inputRefName = useRef<HTMLInputElement | null>(null);
+    const inputRefLogin = useRef<HTMLInputElement | null>(null);
+    const inputRefPassword = useRef<HTMLInputElement | null>(null);
+    const logOut = (e: IPrevent) => {
         e.preventDefault();
         return dispatch(logout(getCookie("token")));
     };
-    const saveUserInfo = (e) => {
+    const saveUserInfo = (e: IPrevent) => {
         e.preventDefault();
         return dispatch(updateUser(accessToken, form));
     };
-    const onChange = (e) => {
+    const onChange = (e: ITargetValue) => {
         setValue({...form, [e.target.name]: e.target.value});
         setChangeAll(true);
     };
@@ -41,22 +44,22 @@ export const Profile = () => {
         setChangeFieldLogin(false);
         setChangeFieldPass(false);
     };
-    const cancelClick = (e) => {
+    const cancelClick = (e: IPrevent) => {
         e.preventDefault();
         setValue({...form, name: user.name, login: user.email});
         setChangeAll(false);
     };
-    const editNameClick = (e) => {
+    const editNameClick = () => {
         setChangeFieldName(!changeFieldName);
-        setTimeout(() => inputRefName.current.focus(), 0);
+        setTimeout(() => inputRefName?.current?.focus(), 0);
     };
     const editLoginClick = () => {
         setChangeFieldLogin(!changeFieldLogin);
-        setTimeout(() => inputRefLogin.current.focus(), 0);
+        setTimeout(() => inputRefLogin?.current?.focus(), 0);
     };
     const editPassClick = () => {
         setChangeFieldPass(!changeFieldPass);
-        setTimeout(() => inputRefPassword.current.focus(), 0);
+        setTimeout(() => inputRefPassword?.current?.focus(), 0);
     };
     useEffect(() => {
         if (userAuth) {
@@ -87,7 +90,7 @@ export const Profile = () => {
                         activeClassName={
                             pathname === "/profile"
                                 ? styles.menuLink_active
-                                : null
+                                : undefined
                         }
                     >
                         Профиль

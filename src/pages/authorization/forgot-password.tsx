@@ -1,25 +1,27 @@
 import styles from "./authorization.module.css";
 import {
-    Button,
+    Button as ButtonUI,
     Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { passwordReset } from "../../services/api/api";
-import { useDispatch, useSelector } from "react-redux";
-import { IS_AUTH } from "../../services/actions/actionsAuthorization";
+import {Link, Redirect, useHistory} from "react-router-dom";
+import React, {useState, useEffect, SyntheticEvent} from "react";
+import {passwordReset} from "../../services/api/api";
+import {useDispatch, useSelector} from "react-redux";
+import {IS_AUTH} from "../../services/actions/actionsAuthorization";
+import {IButton, IPrevent, ITargetValue} from "../../services/utils/types";
 
 export const ForgotPassword = () => {
-    const [form, setValue] = useState({ email: "" });
-    const dispatch = useDispatch();
-    const { userAuth, passReset } = useSelector(
-        (store) => store.reduceAuthorization
+    const Button: React.FC<IButton> = ButtonUI;
+    const [form, setValue] = useState({email: ""});
+    const dispatch: any = useDispatch();
+    const {userAuth, passReset} = useSelector(
+        (store: any) => store.reduceAuthorization
     );
     const history = useHistory();
-    const onChange = (e) => {
-        setValue({ ...form, [e.target.name]: e.target.value });
+    const onChange = (e: ITargetValue) => {
+        setValue({...form, [e.target.name]: e.target.value});
     };
-    const onSubmit = (e) => {
+    const onSubmit = (e: IPrevent) => {
         e.preventDefault();
         dispatch(passwordReset(form));
     };
@@ -30,11 +32,11 @@ export const ForgotPassword = () => {
     }, []);
     useEffect(() => {
         if (passReset) {
-            history.replace({ pathname: "/reset-password" });
+            history.replace({pathname: "/reset-password"});
         }
     }, [passReset]);
     if (userAuth) {
-        return <Redirect to={"/"} />;
+        return <Redirect to={"/"}/>;
     }
     return (
         <div className={[styles.container, "container"].join(" ")}>

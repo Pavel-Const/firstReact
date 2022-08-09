@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getFeed } from "../../services/api/api";
-import { useDrop } from "react-dnd";
+import React, {useEffect} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {getFeed} from "../../services/api/api";
+import {useDrop} from "react-dnd";
 import shortid from "shortid";
 
 import {
@@ -10,8 +10,8 @@ import {
 } from "../../services/actions/actionsIngredients";
 
 import constructorStyles from "./burger-constructor.module.css";
-import { ConstructorCard } from "../constructor-card/constructor-card";
-import { ConstructorOrder } from "../constructor-order/constructor-order";
+import {ConstructorCard} from "../constructor-card/constructor-card";
+import {ConstructorOrder} from "../constructor-order/constructor-order";
 import {
     ConstructorEmpty,
     ConstructorEmptyBottom,
@@ -19,20 +19,20 @@ import {
 } from "../constructor-empty/constructor-empty";
 
 export const BurgerConstructor = () => {
-    const { ingredientList, ingredientListConstructor } = useSelector(
-        (store) => store.reduceIngredients
+    const {ingredientList, ingredientListConstructor} = useSelector(
+        (store: any) => store.reduceIngredients
     );
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch();
 
     useEffect(() => {
-        let arr = [];
-        ingredientListConstructor.other.forEach((item) => {
+        let arr: number[] = [];
+        ingredientListConstructor.other.forEach((item: { _id: number; }) => {
             arr.push(item._id);
         });
-        ingredientListConstructor.buns.forEach((item) => {
+        ingredientListConstructor.buns.forEach((item: { _id: number; }) => {
             arr.push(item._id);
         });
-        for (let len = arr.length, i = len; --i >= 0; ) {
+        for (let len = arr.length, i = len; --i >= 0;) {
             if (arr[arr[i]]) {
                 arr[arr[i]] += 1;
                 arr.splice(i, 1);
@@ -56,7 +56,7 @@ export const BurgerConstructor = () => {
 
     const [, dropTarget] = useDrop({
         accept: "product",
-        drop(item) {
+        drop(item: any) {
             dispatch({
                 type: ADD_PRODUCT_CONSTRUCTOR,
                 id: item.id,
@@ -70,11 +70,11 @@ export const BurgerConstructor = () => {
         dispatch(getFeed());
     }, []);
 
-    let arrayId = [];
-    ingredientListConstructor.other.forEach((item) => {
+    let arrayId: string[] = [];
+    ingredientListConstructor.other.forEach((item: { _id: string }) => {
         arrayId.push(item._id);
     });
-    ingredientListConstructor.buns.forEach((item) => {
+    ingredientListConstructor.buns.forEach((item: { _id: string }) => {
         arrayId.push(item._id);
     });
 
@@ -91,7 +91,7 @@ export const BurgerConstructor = () => {
                                 type="top"
                             />
                         ) : (
-                            <ConstructorEmptyTop name={`Булка (верх)`} />
+                            <ConstructorEmptyTop name={`Булка (верх)`}/>
                         )}
                         <div
                             className={[
@@ -102,7 +102,7 @@ export const BurgerConstructor = () => {
                         >
                             {ingredientListConstructor.other.length ? (
                                 ingredientListConstructor.other.map(
-                                    (item, index) => (
+                                    (item: any, index: number) => (
                                         <ConstructorCard
                                             key={item.newId}
                                             index={index}
@@ -127,12 +127,12 @@ export const BurgerConstructor = () => {
                                 type="bottom"
                             />
                         ) : (
-                            <ConstructorEmptyBottom name={`Булка (низ)`} />
+                            <ConstructorEmptyBottom name={`Булка (низ)`}/>
                         )}
                     </>
                 )}
             </div>
-            <ConstructorOrder id={arrayId} />
+            <ConstructorOrder id={arrayId}/>
         </section>
     );
 };

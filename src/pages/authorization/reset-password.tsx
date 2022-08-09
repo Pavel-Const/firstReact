@@ -3,26 +3,30 @@ import {
     Button,
     Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Redirect } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { passwordNew } from "../../services/api/api";
-import { useDispatch, useSelector } from "react-redux";
-import { IS_AUTH } from "../../services/actions/actionsAuthorization";
+import {Link, Redirect} from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {passwordNew} from "../../services/api/api";
+import {useDispatch, useSelector} from "react-redux";
+import {IS_AUTH} from "../../services/actions/actionsAuthorization";
+import {IButton, IPrevent, ITargetValue} from "../../services/utils/types";
+import {Button as ButtonUI} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/button";
 
 export const ResetPassword = () => {
-    const [form, setValue] = useState({ pin: "", password: "" });
+    const Button: React.FC<IButton> = ButtonUI;
+
+    const [form, setValue] = useState({pin: "", password: ""});
     const [visiblePassword, setVisible] = useState(false);
-    const dispatch = useDispatch();
-    const { userAuth, passReset } = useSelector(
-        (store) => store.reduceAuthorization
+    const dispatch: any = useDispatch();
+    const {userAuth, passReset} = useSelector(
+        (store: any) => store.reduceAuthorization
     );
-    const onChange = (e) => {
-        setValue({ ...form, [e.target.name]: e.target.value });
+    const onChange = (e: ITargetValue) => {
+        setValue({...form, [e.target.name]: e.target.value});
     };
     const onIconClick = () => {
         setVisible(!visiblePassword);
     };
-    const onSubmit = (e) => {
+    const onSubmit = (e: IPrevent) => {
         e.preventDefault();
         passwordNew(form);
     };
@@ -32,9 +36,9 @@ export const ResetPassword = () => {
         });
     }, []);
     if (userAuth) {
-        return <Redirect to={"/"} />;
+        return <Redirect to={"/"}/>;
     } else if (!passReset) {
-        return <Redirect to={"/forgot-password"} />;
+        return <Redirect to={"/forgot-password"}/>;
     }
     return (
         <div className={[styles.container, "container"].join(" ")}>

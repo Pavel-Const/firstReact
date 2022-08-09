@@ -14,16 +14,18 @@ import {
 
 import {baseUrl} from "./url";
 import {deleteCookie, setCookie} from "../utils";
+import {IForms, ingredientTypeReq} from "../utils/types";
 
-function checkResponse(res) {
+function checkResponse(res: { ok: any; json: () => any; status: any; }) {
     if (res.ok) {
         return res.json();
     }
     return Promise.reject(`Ошибка ${res.status}`);
 }
 
+
 export function getFeed() {
-    return function (dispatch) {
+    return function (dispatch: (arg0: { type: string; dataProduct: Array<ingredientTypeReq>; }) => void) {
         fetch(`${baseUrl}/ingredients`)
             .then(checkResponse)
             .then((json) => {
@@ -42,8 +44,8 @@ export function getFeed() {
     };
 }
 
-export function getOrderInfo(id) {
-    return function (dispatch) {
+export function getOrderInfo(id: string[]) {
+    return function (dispatch: (arg0: { type: string; order: number; open: boolean; }) => void) {
         fetch(`${baseUrl}/orders`, {
             method: "POST",
             headers: {
@@ -70,8 +72,8 @@ export function getOrderInfo(id) {
     };
 }
 
-export function passwordReset(form) {
-    return function (dispatch) {
+export function passwordReset(form: IForms) {
+    return function (dispatch: (arg0: { type: string; }) => void) {
         fetch(`${baseUrl}/password-reset`, {
             method: "POST",
             headers: {
@@ -96,7 +98,7 @@ export function passwordReset(form) {
     }
 }
 
-export function passwordNew(form) {
+export function passwordNew(form: IForms) {
     fetch(`${baseUrl}/password-reset/reset`, {
         method: "POST",
         headers: {
@@ -121,8 +123,8 @@ export function passwordNew(form) {
         });
 }
 
-export function register(form) {
-    return function (dispatch) {
+export function register(form: IForms) {
+    return function (dispatch: (arg0: { type: string; name: string; email: string; token: string; }) => void) {
         fetch(`${baseUrl}/auth/register`, {
             method: "POST",
             headers: {
@@ -156,8 +158,8 @@ export function register(form) {
     }
 }
 
-export function login(form) {
-    return function (dispatch) {
+export function login(form: IForms) {
+    return function (dispatch: (arg0: { type: string; name: string; email: string; token: string; }) => void) {
         fetch(`${baseUrl}/auth/login`, {
             method: "POST",
             headers: {
@@ -189,8 +191,8 @@ export function login(form) {
     }
 }
 
-export function logout(token) {
-    return function (dispatch) {
+export function logout(token: string | undefined) {
+    return function (dispatch: (arg0: { type: string; }) => void) {
         fetch(`${baseUrl}/auth/logout`, {
             method: "POST",
             headers: {
@@ -218,8 +220,8 @@ export function logout(token) {
     }
 }
 
-export const getToken = (token) => {
-    return async function (dispatch) {
+export const getToken = (token: string | undefined) => {
+    return async function (dispatch: (arg0: { type: string; token: string; }) => void) {
         await fetch(`${baseUrl}/auth/token`, {
             method: "POST",
             headers: {
@@ -248,8 +250,8 @@ export const getToken = (token) => {
     }
 }
 
-export function getUser(token) {
-    return function (dispatch) {
+export function getUser(token: string) {
+    return function (dispatch: (arg0: { type: string; name: string; email: string; }) => void) {
         fetch(`${baseUrl}/auth/user`, {
             method: "GET",
             headers: {
@@ -277,8 +279,8 @@ export function getUser(token) {
     }
 }
 
-export function updateUser(token, form) {
-    return function (dispatch) {
+export function updateUser(token: string, form: IForms & { password: string | number }) {
+    return function (dispatch: (arg0: { type: string; name: string; email: string; }) => void) {
         fetch(`${baseUrl}/auth/user`, {
             method: "PATCH",
             headers: {

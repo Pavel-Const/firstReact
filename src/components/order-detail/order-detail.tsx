@@ -2,7 +2,7 @@
 import orderStyles from "./order-detail.module.css";
 import React from "react";
 
-export const OrderDetails = (props) => {
+export const OrderDetails = (props: { number: number }) => {
     return (
         <div className={[orderStyles.content, "pb-20"].join(" ")}>
             <h2
