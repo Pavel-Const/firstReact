@@ -1,8 +1,5 @@
 import styles from "./authorization.module.css";
-import {
-
-    Input,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useLocation} from "react-router-dom";
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";

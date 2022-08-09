@@ -9,9 +9,15 @@ import {IS_AUTH} from "../../services/actions/actionsAuthorization";
 import {IButton, IPrevent, ITargetValue} from "../../services/utils/types";
 import {Button as ButtonUI} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/button";
 
+type TFormState = {
+    name: string
+    login: string
+    password: string
+}
+
 export const Profile = () => {
     const {pathname} = useLocation();
-    const [form, setValue] = useState({name: "", login: "", password: ""});
+    const [form, setValue] = useState<TFormState>({name: "", login: "", password: ""});
     const [changeFieldName, setChangeFieldName] = useState(false);
     const [changeFieldLogin, setChangeFieldLogin] = useState(false);
     const [changeFieldPass, setChangeFieldPass] = useState(false);
