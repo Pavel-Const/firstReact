@@ -4,15 +4,19 @@ import {
     Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";
-import React, {useState, useEffect, SyntheticEvent} from "react";
+import React, {useState, useEffect} from "react";
 import {passwordReset} from "../../services/api/api";
 import {useDispatch, useSelector} from "react-redux";
 import {IS_AUTH} from "../../services/actions/actionsAuthorization";
 import {IButton, IPrevent, ITargetValue} from "../../services/utils/types";
 
+type TFormState = {
+    email: string
+}
+
 export const ForgotPassword = () => {
     const Button: React.FC<IButton> = ButtonUI;
-    const [form, setValue] = useState({email: ""});
+    const [form, setValue] = useState<TFormState>({email: ""});
     const dispatch: any = useDispatch();
     const {userAuth, passReset} = useSelector(
         (store: any) => store.reduceAuthorization

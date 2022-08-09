@@ -1,8 +1,5 @@
 import styles from "./authorization.module.css";
-import {
-    Button,
-    Input,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect} from "react-router-dom";
 import React, {useState, useEffect} from "react";
 import {passwordNew} from "../../services/api/api";
@@ -11,10 +8,15 @@ import {IS_AUTH} from "../../services/actions/actionsAuthorization";
 import {IButton, IPrevent, ITargetValue} from "../../services/utils/types";
 import {Button as ButtonUI} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/button";
 
+type TFormState = {
+    pin: string
+    password: string
+}
+
 export const ResetPassword = () => {
     const Button: React.FC<IButton> = ButtonUI;
 
-    const [form, setValue] = useState({pin: "", password: ""});
+    const [form, setValue] = useState<TFormState>({pin: "", password: ""});
     const [visiblePassword, setVisible] = useState(false);
     const dispatch: any = useDispatch();
     const {userAuth, passReset} = useSelector(

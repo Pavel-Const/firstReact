@@ -1,6 +1,6 @@
 import styles from "./authorization.module.css";
 import {
-    Button,
+
     Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useLocation} from "react-router-dom";
@@ -11,6 +11,12 @@ import {IS_AUTH} from "../../services/actions/actionsAuthorization";
 import {IButton, IPrevent, ITargetValue} from "../../services/utils/types";
 import {Button as ButtonUI} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/button";
 
+type TFormState = {
+    name: string
+    email: string
+    password: string
+}
+
 interface ILocation {
     from?: {
         pathname?: string
@@ -18,7 +24,7 @@ interface ILocation {
 }
 
 export const Register = () => {
-    const [form, setValue] = useState({name: "", email: "", password: ""});
+    const [form, setValue] = useState<TFormState>({name: "", email: "", password: ""});
     const [visiblePassword, setVisible] = useState(false);
     const dispatch: any = useDispatch();
     const {userAuth} = useSelector((store: any) => store.reduceAuthorization);

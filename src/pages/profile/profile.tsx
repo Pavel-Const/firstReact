@@ -1,9 +1,6 @@
 import styles from "./profile.module.css";
 import {NavLink, useLocation} from "react-router-dom";
-import {
-    Button,
-    Input,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getToken, getUser, logout, updateUser} from "../../services/api/api";
@@ -44,6 +41,11 @@ export const Profile = () => {
         setChangeFieldLogin(false);
         setChangeFieldPass(false);
     };
+
+    const onEditFocus = (inputRef: any) => {
+        setTimeout(() => inputRef?.current?.focus(), 0);
+    }
+
     const cancelClick = (e: IPrevent) => {
         e.preventDefault();
         setValue({...form, name: user.name, login: user.email});
@@ -51,15 +53,15 @@ export const Profile = () => {
     };
     const editNameClick = () => {
         setChangeFieldName(!changeFieldName);
-        setTimeout(() => inputRefName?.current?.focus(), 0);
+        onEditFocus(inputRefName)
     };
     const editLoginClick = () => {
         setChangeFieldLogin(!changeFieldLogin);
-        setTimeout(() => inputRefLogin?.current?.focus(), 0);
+        onEditFocus(inputRefLogin)
     };
     const editPassClick = () => {
         setChangeFieldPass(!changeFieldPass);
-        setTimeout(() => inputRefPassword?.current?.focus(), 0);
+        onEditFocus(inputRefPassword)
     };
     useEffect(() => {
         if (userAuth) {
