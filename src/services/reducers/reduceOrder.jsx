@@ -1,4 +1,4 @@
-import { GET_ORDER_INFO, CLOSE_MODAL } from "../actions/actionsOrder";
+import {GET_ORDER_INFO, CLOSE_MODAL} from "../actions/actionsOrder";
 
 const initialState = {
     modalInfo: {

@@ -1,62 +1,73 @@
 /* eslint-disable no-lone-blocks */
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import ingredientStyles from "./burger-ingredients.module.css";
-import { useSelector, useDispatch } from "react-redux";
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IngredientBlock } from "../ingredients-block/ingredient-block";
-import { getFeed } from "../../services/api/api";
+import {useSelector, useDispatch} from "react-redux";
+import {Tab as TabUI} from "@ya.praktikum/react-developer-burger-ui-components";
+import {IngredientBlock} from "../ingredients-block/ingredient-block";
+import {getFeed} from "../../services/api/api";
+import {ingredientTypeReq, TRef} from "../../services/utils/types";
 
 export const BurgerIngredients = () => {
     const [current, setCurrent] = useState("one");
-    const { ingredientData, load } = useSelector(
-        (store) => store.reduceIngredients.ingredientList
+    const {ingredientData, load} = useSelector(
+        (store: any) => store.reduceIngredients.ingredientList
     );
-    const dispatch = useDispatch();
-
+    const dispatch: any = useDispatch();
+    const Tab: React.FC<{
+        active: boolean;
+        value: string;
+        onClick: (value: string) => void;
+        children: React.ReactNode;
+    }> = TabUI;
     useEffect(() => {
         dispatch(getFeed());
     }, [dispatch]);
 
-    const dataBun = [],
-        dataMain = [],
-        dataSauce = [];
+    const dataBun: Array<ingredientTypeReq> = [],
+        dataMain: Array<ingredientTypeReq> = [],
+        dataSauce: Array<ingredientTypeReq> = [];
     {
         load &&
-            ingredientData.forEach((item) => {
-                switch (item.type) {
-                    case "bun":
-                        dataBun.push(item);
-                        break;
-                    case "main":
-                        dataMain.push(item);
-                        break;
-                    case "sauce":
-                        dataSauce.push(item);
-                        break;
-                    default:
-                }
-            });
+        ingredientData.forEach((item: ingredientTypeReq) => {
+            switch (item.type) {
+                case "bun":
+                    dataBun.push(item);
+                    break;
+                case "main":
+                    dataMain.push(item);
+                    break;
+                case "sauce":
+                    dataSauce.push(item);
+                    break;
+                default:
+            }
+
+        });
     }
-    const bunRef = React.useRef();
-    const mainRef = React.useRef();
-    const sauceRef = React.useRef();
-    const parentRef = React.useRef();
+    const bunRef = React.useRef<TRef>(null);
+    const mainRef = React.useRef<TRef>(null);
+    const sauceRef = React.useRef<TRef>(null);
+    const parentRef = React.useRef<TRef>(null);
 
     const onScroll = () => {
-        const parent = parentRef.current.getBoundingClientRect();
-        const bun = bunRef.current.getBoundingClientRect();
-        const main = mainRef.current.getBoundingClientRect();
-        const sauce = sauceRef.current.getBoundingClientRect();
-        const bunY = Math.abs(bun.top - parent.top);
-        const mainY = Math.abs(main.top - parent.top);
-        const sauceY = Math.abs(sauce.top - parent.top);
-        if (bunY < mainY && bunY < sauceY) {
-            setCurrent("one");
-        } else if (mainY < bunY && mainY < sauceY) {
-            setCurrent("two");
-        } else {
-            setCurrent("three");
+
+        const parent = parentRef.current?.getBoundingClientRect();
+        const bun = bunRef.current?.getBoundingClientRect();
+        const main = mainRef.current?.getBoundingClientRect();
+        const sauce = sauceRef.current?.getBoundingClientRect();
+        if (parent && bun && main && sauce) {
+            const bunY = Math.abs(bun.top - parent.top);
+            const mainY = Math.abs(main.top - parent.top);
+            const sauceY = Math.abs(sauce.top - parent.top);
+            if (bunY < mainY && bunY < sauceY) {
+                setCurrent("one");
+            } else if (mainY < bunY && mainY < sauceY) {
+                setCurrent("two");
+            } else {
+                setCurrent("three");
+            }
         }
+
     };
     return (
         <section className={[ingredientStyles.main].join(" ")}>

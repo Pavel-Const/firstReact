@@ -1,15 +1,21 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
+import React, {FC, ReactNode, useEffect} from "react";
 import ReactDOM from "react-dom";
 import modalStyles from "./modal.module.css";
-import { ModalOverlay } from "../modal-overlay/modal-overlay";
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {ModalOverlay} from "../modal-overlay/modal-overlay";
+import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
-const modalRoot = document.getElementById("root-modal");
-const Modal = (props) => {
+interface IModal {
+    isOpen: boolean | object,
+    title?: string,
+    children?: ReactNode;
+    closeModal: () => void
+}
+
+const modalRoot = document.getElementById("root-modal")!;
+const Modal: FC<IModal> = (props) => {
     const isOpen = props.isOpen;
     useEffect(() => {
-        function closeByEscape(evt) {
+        function closeByEscape(evt: { key: string; }) {
             if (evt.key === "Escape") {
                 props.closeModal();
             }
@@ -17,11 +23,11 @@ const Modal = (props) => {
 
         if (isOpen) {
             document.addEventListener("keydown", closeByEscape);
-            document.querySelector("body").classList.add("modalOpen");
+            (document.querySelector("body") as HTMLElement).classList.add("modalOpen");
 
             return () => {
                 document.removeEventListener("keydown", closeByEscape);
-                document.querySelector("body").classList.remove("modalOpen");
+                (document.querySelector("body") as HTMLElement).classList.remove("modalOpen");
             };
         }
     }, [isOpen]);
@@ -41,20 +47,16 @@ const Modal = (props) => {
                         className={modalStyles.btnClose}
                         onClick={props.closeModal}
                     >
-                        <CloseIcon type="primary" />
+                        <CloseIcon type="primary"/>
                     </button>
                 </div>
                 {props.children}
             </div>
-            <ModalOverlay closeModal={props.closeModal} />
+            <ModalOverlay closeModal={props.closeModal}/>
         </>,
         modalRoot
     );
 };
 
-Modal.propTypes = {
-    isOpen: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-    title: PropTypes.string,
-};
 
 export default Modal;

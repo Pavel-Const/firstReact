@@ -1,40 +1,43 @@
-import React, { useRef } from "react";
-import { useDispatch } from "react-redux";
+import React, {FC, useRef} from "react";
+import {useDispatch} from "react-redux";
 import styles from "./constructor-card.module.css";
 import {
     ConstructorElement,
     DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import {
     CHANGE_PRODUCT_CONSTRUCTOR,
     DELETE_CONSTRUCTOR_ITEM,
 } from "../../services/actions/actionsIngredients";
-import { ingredientType } from "../../services/utils/types";
-import { useDrag, useDrop } from "react-dnd";
+import {ingredientType} from "../../services/utils/types";
+import {useDrag, useDrop, XYCoord} from "react-dnd";
 
-export const ConstructorCard = (props) => {
-    const ref = useRef(null);
-    const [{ isDrag }, dragref] = useDrag({
+export const ConstructorCard: FC<ingredientType & {
+    group?: string,
+    isLocked?: boolean,
+    index?: number,
+}> = (props) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const [{isDrag}, dragref] = useDrag({
         type: "elConstructor",
-        item: { id: props.index },
+        item: {id: props.index},
         collect: (monitor) => ({
             isDrag: monitor.isDragging(),
         }),
     });
-    const [{ handlerId }, dropref] = useDrop({
+    const [{handlerId}, dropref] = useDrop({
         accept: "elConstructor",
         collect(monitor) {
             return {
                 handlerId: monitor.getHandlerId(),
             };
         },
-        hover(item, monitor) {
+        hover(item: any, monitor) {
             if (!ref.current) {
                 return;
             }
-            const dragIndex = item.id;
-            const hoverIndex = props.index;
+            const dragIndex: number | undefined = item.id;
+            const hoverIndex: number | undefined = props.index;
 
             if (dragIndex === hoverIndex) {
                 return;
@@ -42,15 +45,18 @@ export const ConstructorCard = (props) => {
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleY =
                 (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-            const clientOffset = monitor.getClientOffset();
+            const clientOffset: XYCoord | null = monitor.getClientOffset();
+            // @ts-ignore
             const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            if (dragIndex && hoverIndex) {
+                if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                    return;
+                }
+                if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                    return;
+                }
+            }
 
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-                return;
-            }
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-                return;
-            }
             dispatch({
                 type: CHANGE_PRODUCT_CONSTRUCTOR,
                 hoverIndex: hoverIndex,
@@ -60,7 +66,7 @@ export const ConstructorCard = (props) => {
         },
     });
     const dispatch = useDispatch();
-    const deletItem = () => {
+    const deleteItem = () => {
         dispatch({
             type: DELETE_CONSTRUCTOR_ITEM,
             index: props.index,
@@ -73,16 +79,16 @@ export const ConstructorCard = (props) => {
             {props.type === undefined ? (
                 <div
                     className={[styles.item].join(" ")}
-                    style={{ opacity: opacity }}
+                    style={{opacity: opacity}}
                     data-handler-id={handlerId}
                     ref={ref}
                 >
-                    <DragIcon />
+                    <DragIcon type={'primary'}/>
                     <ConstructorElement
                         text={props.name}
                         price={props.price}
                         thumbnail={props.src}
-                        handleClose={deletItem}
+                        handleClose={deleteItem}
                     />
                 </div>
             ) : (
@@ -100,8 +106,4 @@ export const ConstructorCard = (props) => {
     );
 };
 
-ConstructorCard.propTypes = {
-    ...ingredientType,
-    group: PropTypes.string,
-    isLocked: PropTypes.bool,
-};
+

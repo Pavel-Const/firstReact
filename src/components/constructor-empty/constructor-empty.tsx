@@ -1,8 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styles from "./constructor-empty.module.css";
 
-export const ConstructorEmpty = (props) => {
+export const ConstructorEmpty = (props: { name: string }) => {
     return (
         <div className={[styles.main, "ml-8"].join(" ")}>
             <span className={styles.text}>{props.name}</span>
@@ -10,14 +9,14 @@ export const ConstructorEmpty = (props) => {
     );
 };
 
-export const ConstructorEmptyTop = (props) => {
+export const ConstructorEmptyTop = (props: { name: string }) => {
     return (
         <div className={[styles.main, styles.top, "ml-8"].join(" ")}>
             <span className={styles.text}>{props.name}</span>
         </div>
     );
 };
-export const ConstructorEmptyBottom = (props) => {
+export const ConstructorEmptyBottom = (props: { name: string }) => {
     return (
         <div className={[styles.main, styles.bottom, "ml-8"].join(" ")}>
             <span className={styles.text}>{props.name}</span>
@@ -25,6 +24,4 @@ export const ConstructorEmptyBottom = (props) => {
     );
 };
 
-ConstructorEmpty.propTypes = {
-    name: PropTypes.string.isRequired,
-};
+

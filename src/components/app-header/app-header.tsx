@@ -7,10 +7,10 @@ import {
     Logo,
     ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useLocation } from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 function AppHeader() {
-    const { pathname } = useLocation();
+    const {pathname} = useLocation();
     return (
         <header className={headerStyles.header}>
             <div className={headerStyles.container}>
@@ -36,13 +36,13 @@ function AppHeader() {
                             "text text_type_main-default text_color_inactive"
                         }
                     >
-                        <ListIcon type="secondary" />
+                        <ListIcon type="secondary"/>
                         Лента заказов
                     </HeaderButton>
                 </div>
-                <div className={headerStyles.logo}>
-                    <Logo />
-                </div>
+                <Link to={'/'} className={headerStyles.logo}>
+                    <Logo/>
+                </Link>
                 <Link to={"/profile"}>
                     <HeaderButton
                         styles={

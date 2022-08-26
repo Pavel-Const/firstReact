@@ -1,10 +1,17 @@
-import React from "react";
+import React, {FC} from "react";
 import styles from "./ingredient-block.module.css";
-import { IngredientCard } from "../ingredients-card/ingredient-card";
+import {IngredientCard} from "../ingredients-card/ingredient-card";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+import {ingredientTypeReq} from "../../services/utils/types";
 
-export const IngredientBlock = (props) => {
+interface IProps {
+    elementRef: any,
+    title: string
+    list: Array<ingredientTypeReq>
+}
+
+export const IngredientBlock: FC<IProps> = (props) => {
     return (
         <section className={styles.block}>
             <h2 ref={props.elementRef}>{props.title}</h2>
@@ -17,7 +24,7 @@ export const IngredientBlock = (props) => {
                             src={item.image}
                             price={item.price}
                             name={item.name}
-                            type={item.type}
+                            typeIng={item.type}
                         />
                     );
                 })}
