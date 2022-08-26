@@ -46,3 +46,4 @@ export interface IButton {
 export interface IForms {
     [name: string]: string,
 }
+

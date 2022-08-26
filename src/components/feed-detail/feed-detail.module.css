@@ -1,0 +1,88 @@
+.detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 640px;
+    z-index: 100;
+}
+
+.num {
+    text-align: center;
+}
+
+.name {
+    margin-top: 40px;
+    align-self: flex-start;
+}
+
+.status {
+    align-self: flex-start;
+    color: #00CCCC;
+    margin-top: 12px;
+}
+
+.structure {
+    margin-top: 60px;
+    width: 100%;
+}
+
+.list {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 312px;
+}
+
+.item {
+    width: 100%;
+    padding-right: 24px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.item__img {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    background-color: #131316;
+    border: 2px solid #801AB2;
+    flex: none;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item__img img {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    z-index: 10;
+}
+
+.item__name {
+    width: 100%;
+}
+
+.item__total {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    flex: none;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    width: 100%;
+}

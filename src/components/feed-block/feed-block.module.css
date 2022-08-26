@@ -1,0 +1,19 @@
+.block {
+    margin-top: 40px;
+    width: 50%;
+}
+
+.block__profile {
+    width: 100%;
+}
+
+.list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 812px;
+}
+

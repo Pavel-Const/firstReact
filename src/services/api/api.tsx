@@ -13,7 +13,7 @@ import {
 } from "../actions/actionsOrder";
 
 import {baseUrl} from "./url";
-import {deleteCookie, setCookie} from "../utils";
+import {deleteCookie, getCookie, setCookie} from "../utils";
 import {IForms, ingredientTypeReq} from "../utils/types";
 
 function checkResponse(res: { ok: any; json: () => any; status: any; }) {
@@ -22,7 +22,6 @@ function checkResponse(res: { ok: any; json: () => any; status: any; }) {
     }
     return Promise.reject(`Ошибка ${res.status}`);
 }
-
 
 export function getFeed() {
     return function (dispatch: (arg0: { type: string; dataProduct: Array<ingredientTypeReq>; }) => void) {
@@ -44,13 +43,14 @@ export function getFeed() {
     };
 }
 
-export function getOrderInfo(id: string[]) {
+export function getOrderInfo(id: string[], token: string) {
     return function (dispatch: (arg0: { type: string; order: number; open: boolean; }) => void) {
         fetch(`${baseUrl}/orders`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
+                Authorization: token
             },
             body: JSON.stringify({ingredients: id}),
         })
@@ -139,9 +139,9 @@ export function register(form: IForms) {
         })
             .then(checkResponse)
             .then((json) => {
-                console.log(json)
                 if (json.success) {
                     setCookie('token', json.refreshToken);
+                    setCookie('accessToken', json.accessToken);
                     dispatch({
                         type: AUTH_REGISTER,
                         name: json.user.name,
@@ -175,6 +175,7 @@ export function login(form: IForms) {
             .then((json) => {
                 if (json.success) {
                     setCookie('token', json.refreshToken);
+                    setCookie('accessToken', json.accessToken);
                     dispatch({
                         type: AUTH_LOGIN,
                         name: json.user.name,
@@ -229,13 +230,14 @@ export const getToken = (token: string | undefined) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                "token": token
+                "token": getCookie('token')
             }),
         })
             .then(checkResponse)
             .then((json) => {
                 if (json.success) {
                     setCookie('token', json.refreshToken);
+                    setCookie('accessToken', json.accessToken);
                     dispatch({
                         type: AUTH_TOKEN,
                         token: json.accessToken,
@@ -250,10 +252,32 @@ export const getToken = (token: string | undefined) => {
     }
 }
 
+// export const fetchWithRefresh = async (url, options) => {
+//     try {
+//         const res = await fetch(url, options);
+//
+//         return await checkResponse(res);
+//     } catch (err) {
+//         if (err.message === 'jwt expired') {
+//             const {refreshToken, accessToken} = await getToken();
+//             saveTokens(refreshToken, accessToken);
+//
+//             options.headers.authorization = accessToken;
+//
+//             const res = await fetch(url, options);
+//
+//             return await checkResponse(res);
+//         } else {
+//             return Promise.reject(err);
+//         }
+//     }
+// }
+
 export function getUser(token: string) {
     return function (dispatch: (arg0: { type: string; name: string; email: string; }) => void) {
         fetch(`${baseUrl}/auth/user`, {
             method: "GET",
+            // @ts-ignore
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
@@ -279,14 +303,15 @@ export function getUser(token: string) {
     }
 }
 
-export function updateUser(token: string, form: IForms & { password: string | number }) {
+export function updateUser(form: IForms & { password: string | number }) {
     return function (dispatch: (arg0: { type: string; name: string; email: string; }) => void) {
         fetch(`${baseUrl}/auth/user`, {
             method: "PATCH",
+            // @ts-ignore
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
-                Authorization: token
+                Authorization: getCookie('accessToken')
             },
             body: JSON.stringify({
                 "email": form.login,

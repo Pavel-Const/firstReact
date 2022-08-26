@@ -1,5 +1,5 @@
 /* eslint-disable default-case */
-import React from "react";
+import React, {useEffect} from "react";
 import {
     Redirect,
     Route,
@@ -25,6 +25,9 @@ import {ForgotPassword} from "../../pages/authorization/forgot-password";
 import {ResetPassword} from "../../pages/authorization/reset-password";
 import {Profile} from "../../pages/profile/profile";
 import {ProtectedRoute} from "../protected-route/protected-route";
+import {Feed} from "../feed/feed";
+import {FeedDetail} from "../feed-detail/feed-detail";
+import {WS_CONNECTION_START} from "../../services/actions/actionsWs";
 
 interface ILocation {
     background?: Location
@@ -77,24 +80,51 @@ const App = () => {
                 <Route path={"/ingredients/:id"} exact>
                     <IngredientDetails/>
                 </Route>
+                <Route path={"/feed"} exact>
+                    <Feed/>
+                </Route>
+                <Route path={"/feed/:id"} exact>
+                    <FeedDetail/>
+                </Route>
                 <ProtectedRoute path={"/profile"} exact>
                     <Profile/>
                 </ProtectedRoute>
                 <ProtectedRoute path={"/profile/orders"} exact>
                     <Profile/>
                 </ProtectedRoute>
+                <ProtectedRoute path={"/profile/orders/:id"} exact>
+                    <FeedDetail/>
+                </ProtectedRoute>
             </Switch>
 
             {background && (
-                <Route path={"/ingredients/:id"}>
-                    <Modal
-                        title={"Детали ингредиента"}
-                        isOpen={background}
-                        closeModal={closeModal}
-                    >
-                        <IngredientDetails/>
-                    </Modal>
-                </Route>
+                <>
+                    <Route path={"/ingredients/:id"}>
+                        <Modal
+                            title={"Детали ингредиента"}
+                            isOpen={background}
+                            closeModal={closeModal}
+                        >
+                            <IngredientDetails/>
+                        </Modal>
+                    </Route>
+                    <Route path={"/feed/:id"}>
+                        <Modal
+                            isOpen={background}
+                            closeModal={closeModal}
+                        >
+                            <FeedDetail/>
+                        </Modal>
+                    </Route>
+                    <Route path={"/profile/orders/:id"}>
+                        <Modal
+                            isOpen={background}
+                            closeModal={closeModal}
+                        >
+                            <FeedDetail/>
+                        </Modal>
+                    </Route>
+                </>
             )}
             {open && (
                 <Modal isOpen={open} closeModal={closeModalOrder}>

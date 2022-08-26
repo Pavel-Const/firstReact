@@ -21,7 +21,20 @@ const initialState = {
     totalPrice: "",
 };
 
-export const reduceIngredients = (state = initialState, action) => {
+export interface IIngredientsAction {
+    type: string;
+    dataProduct: [];
+    title: string;
+    id: string;
+    kind: string;
+    newId: any;
+    count: any;
+    index: number;
+    dragIndex: number;
+    hoverIndex: number;
+};
+
+export const reduceIngredients = (state = initialState, action: IIngredientsAction) => {
     switch (action.type) {
         case GET_INGREDIENTS_LIST: {
             return {
@@ -41,18 +54,21 @@ export const reduceIngredients = (state = initialState, action) => {
                     kind: "detail",
                     ingredientItem: [
                         ...state.ingredientList.ingredientData,
+                        // @ts-ignore
                     ].filter((item) => item._id === action.id),
                 },
             };
         }
         case ADD_PRODUCT_CONSTRUCTOR: {
             if (action.kind === "bun") {
+
                 return {
                     ...state,
                     ingredientListConstructor: {
                         ...state.ingredientListConstructor,
                         buns: [
                             [...state.ingredientList.ingredientData].filter(
+                                // @ts-ignore
                                 (item) => item._id === action.id
                             )[0],
                         ],
@@ -61,7 +77,8 @@ export const reduceIngredients = (state = initialState, action) => {
             } else {
                 let newOther = [...state.ingredientList.ingredientData]
                     .map((a) => {
-                        return { ...a };
+                        // @ts-ignore
+                        return {...a};
                     })
                     .filter((item) => item._id === action.id)[0];
 
@@ -81,13 +98,14 @@ export const reduceIngredients = (state = initialState, action) => {
         }
         case GET_TOTAL_PRICE: {
             const priceOther = state.ingredientListConstructor.other.reduce(
-                (acc, el) => {
+                (acc, el: { price: number }) => {
                     return el.price + acc;
                 },
                 0
             );
-            let priceBuns = "";
+            let priceBuns: number = 0;
             if (state.ingredientListConstructor.buns.length) {
+                // @ts-ignore
                 priceBuns = 2 * state.ingredientListConstructor.buns[0].price;
             }
 

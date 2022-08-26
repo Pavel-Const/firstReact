@@ -10,7 +10,13 @@ const initialState = {
     },
 };
 
-export const reduceOrder = (state = initialState, action) => {
+export interface IOrderAction {
+    type: string;
+    open: boolean;
+    order: number
+};
+
+export const reduceOrder = (state = initialState, action: IOrderAction) => {
     switch (action.type) {
         case GET_ORDER_INFO: {
             return {

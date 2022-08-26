@@ -13,7 +13,8 @@ export const ConstructorOrder = (props: { id: Array<string> }) => {
     const {totalPrice, ingredientListConstructor} = useSelector(
         (store: any) => store.reduceIngredients
     );
-    const {userAuth} = useSelector((store: any) => store.reduceAuthorization);
+    const {userAuth, accessToken} = useSelector((store: any) => store.reduceAuthorization);
+
     const history = useHistory();
     const dispatch: any = useDispatch();
     const Button: React.FC<{
@@ -32,7 +33,7 @@ export const ConstructorOrder = (props: { id: Array<string> }) => {
     }, [ingredientListConstructor]);
     const open = () => {
         if (ingredientListConstructor.buns.length && userAuth) {
-            return dispatch(getOrderInfo(props.id));
+            return dispatch(getOrderInfo(props.id, accessToken));
         } else {
             history.replace({
                 pathname: "/login",

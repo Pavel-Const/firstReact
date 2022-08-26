@@ -1,4 +1,3 @@
-export const GET_TOTAL_PRICE = "GET_TOTAL_PRICE";
 export const AUTH_REGISTER = "AUTH_REGISTER";
 export const AUTH_LOGIN = "AUTH_LOGIN";
 export const AUTH_LOGOUT = "AUTH_LOGOUT";

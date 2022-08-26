@@ -8,7 +8,7 @@ import {
     IS_AUTH,
     RESET_PASSWORD,
 } from "../actions/actionsAuthorization";
-import { getCookie } from "../utils";
+import {getCookie} from "../utils";
 
 const initialState = {
     user: {
@@ -21,7 +21,26 @@ const initialState = {
     passReset: false,
 };
 
-export const reduceAuthorization = (state = initialState, action) => {
+
+export interface IUserAction {
+    type: string,
+    name: string,
+    email: string,
+    token: number,
+};
+
+export interface IUserState {
+    user?: {
+        name: string,
+        email: string,
+    },
+    accessToken?: number | null,
+    loader?: boolean,
+    userAuth?: string | boolean,
+    passReset?: boolean,
+};
+
+export const reduceAuthorization = (state = initialState, action: IUserAction): IUserState => {
     switch (action.type) {
         case AUTH_REGISTER:
             return {

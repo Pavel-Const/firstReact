@@ -3,11 +3,12 @@ import {NavLink, useLocation} from "react-router-dom";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getToken, getUser, logout, updateUser} from "../../services/api/api";
+import {getFeed, getToken, getUser, logout, updateUser} from "../../services/api/api";
 import {getCookie} from "../../services/utils";
-import {IS_AUTH} from "../../services/actions/actionsAuthorization";
 import {IButton, IPrevent, ITargetValue} from "../../services/utils/types";
 import {Button as ButtonUI} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/button";
+import {WS_CONNECTION_CLOSE, WS_CONNECTION_START} from "../../services/actions/actionsWs";
+import {FeedBlock} from "../../components/feed-block/feed-block";
 
 type TFormState = {
     name: string
@@ -23,20 +24,21 @@ export const Profile = () => {
     const [changeFieldPass, setChangeFieldPass] = useState(false);
     const [changeAll, setChangeAll] = useState(false);
     const Button: React.FC<IButton> = ButtonUI;
-    const {accessToken, loader, user, userAuth} = useSelector(
+    const {loader, user, userAuth} = useSelector(
         (store: any) => store.reduceAuthorization
     );
     const dispatch: any = useDispatch();
     const inputRefName = useRef<HTMLInputElement | null>(null);
     const inputRefLogin = useRef<HTMLInputElement | null>(null);
     const inputRefPassword = useRef<HTMLInputElement | null>(null);
+    const accessToken: string | undefined = getCookie('accessToken')
     const logOut = (e: IPrevent) => {
         e.preventDefault();
         return dispatch(logout(getCookie("token")));
     };
     const saveUserInfo = (e: IPrevent) => {
         e.preventDefault();
-        return dispatch(updateUser(accessToken, form));
+        return dispatch(updateUser(form));
     };
     const onChange = (e: ITargetValue) => {
         setValue({...form, [e.target.name]: e.target.value});
@@ -69,22 +71,29 @@ export const Profile = () => {
         setChangeFieldPass(!changeFieldPass);
         onEditFocus(inputRefPassword)
     };
+
     useEffect(() => {
-        if (userAuth) {
-            if (accessToken) {
-                dispatch(getUser(accessToken));
-            } else {
-                dispatch(getToken(getCookie("token")));
-                loader && dispatch(getUser(accessToken));
+        dispatch(getFeed());
+        setValue({...form, name: user.name, login: user.email});
+        if (accessToken) {
+            // @ts-ignore
+            let authToken = accessToken.split('Bearer ')[1];
+            dispatch(getUser(accessToken));
+            dispatch({
+                type: WS_CONNECTION_START,
+                url: `wss://norma.nomoreparties.space/orders?token=${authToken}`
+            });
+            return () => {
+                dispatch({type: WS_CONNECTION_CLOSE});
             }
-            setValue({...form, name: user.name, login: user.email});
+        } else {
+            dispatch(getToken(getCookie("token")));
+            // @ts-ignore
+            loader && dispatch(getUser(accessToken));
         }
-    }, [accessToken, loader, user.name, user.email]);
-    useEffect(() => {
-        dispatch({
-            type: IS_AUTH,
-        });
-    }, []);
+
+    }, [user.name, user.email]);
+
     return (
         <div className={[styles.container, "container"].join(" ")}>
             <nav className={styles.nav}>
@@ -188,6 +197,16 @@ export const Profile = () => {
                     )}
                 </form>
             )}
+            {pathname === "/profile/orders" && (
+                <div className={[
+                    styles.orders,
+                    "scrollCustom",
+                ].join(" ")}>
+                    <FeedBlock/>
+                </div>
+            )}
         </div>
     );
 };
+
+
