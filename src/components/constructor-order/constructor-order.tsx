@@ -1,13 +1,13 @@
 import React, {SyntheticEvent, useEffect} from "react";
 import styles from "./constructor-order.module.css";
-import {useDispatch, useSelector} from "react-redux";
-import {getOrderInfo} from "../../services/api/api";
+import {getOrderInfo} from "../../services/api/apiOrders";
 import {
     CurrencyIcon,
     Button as ButtonUI
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import {GET_TOTAL_PRICE} from "../../services/actions/actionsIngredients";
 import {useHistory} from "react-router-dom";
+import {useDispatch, useSelector} from "../../index";
 
 export const ConstructorOrder = (props: { id: Array<string> }) => {
     const {totalPrice, ingredientListConstructor} = useSelector(

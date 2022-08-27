@@ -2,11 +2,11 @@ import styles from "./authorization.module.css";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect} from "react-router-dom";
 import React, {useState, useEffect} from "react";
-import {passwordNew} from "../../services/api/api";
-import {useDispatch, useSelector} from "react-redux";
+import {passwordNew} from "../../services/api/apiAuth";
 import {IS_AUTH} from "../../services/actions/actionsAuthorization";
 import {IButton, IPrevent, ITargetValue} from "../../services/utils/types";
 import {Button as ButtonUI} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/button";
+import {useDispatch, useSelector} from "../../index";
 
 type TFormState = {
     pin: string
@@ -18,7 +18,7 @@ export const ResetPassword = () => {
 
     const [form, setValue] = useState<TFormState>({pin: "", password: ""});
     const [visiblePassword, setVisible] = useState(false);
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const {userAuth, passReset} = useSelector(
         (store: any) => store.reduceAuthorization
     );

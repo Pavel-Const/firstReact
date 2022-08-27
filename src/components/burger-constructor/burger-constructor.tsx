@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
-import {useSelector, useDispatch} from "react-redux";
-import {getFeed} from "../../services/api/api";
+import {getFeed} from "../../services/api/apiIngredients";
 import {useDrop} from "react-dnd";
 import shortid from "shortid";
 
@@ -17,12 +16,13 @@ import {
     ConstructorEmptyBottom,
     ConstructorEmptyTop,
 } from "../constructor-empty/constructor-empty";
+import {useDispatch, useSelector} from "../../index";
 
 export const BurgerConstructor = () => {
     const {ingredientList, ingredientListConstructor} = useSelector(
-        (store: any) => store.reduceIngredients
+        (store) => store.reduceIngredients
     );
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         let arr: number[] = [];
@@ -67,6 +67,7 @@ export const BurgerConstructor = () => {
     });
 
     useEffect(() => {
+        // @ts-ignore
         dispatch(getFeed());
     }, []);
 

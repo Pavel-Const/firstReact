@@ -7,8 +7,8 @@ import {
     useParams,
     useRouteMatch,
 } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {getFeed} from "../../services/api/api";
+import {getFeed} from "../../services/api/apiIngredients";
+import {useDispatch, useSelector} from "../../index";
 
 export const IngredientDetails = () => {
     const {ingredientData, load} = useSelector(

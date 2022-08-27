@@ -2,10 +2,18 @@ import {
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSE,
-    WS_GET_MESSAGE
+    WS_GET_MESSAGE, TActionsWs
 } from '../actions/actionsWs';
 
-const initialState = {
+type TInitialState = {
+    wsConnected: boolean,
+    getData: boolean,
+    orders: any[],
+    total: null | number,
+    totalToday: null | number
+}
+
+const initialState: TInitialState = {
     wsConnected: false,
     getData: false,
     orders: [],
@@ -13,7 +21,8 @@ const initialState = {
     totalToday: null
 };
 
-export const reducerWs = (state = initialState, action: { type: any; payload: any; }) => {
+
+export const reducerWs = (state = initialState, action: TActionsWs): TInitialState => {
     switch (action.type) {
         case WS_CONNECTION_SUCCESS:
             console.log('connect')

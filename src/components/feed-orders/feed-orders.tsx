@@ -1,15 +1,15 @@
 /* eslint-disable no-lone-blocks */
 import React from "react";
 import styles from "./feed-orders.module.css";
-import {useSelector} from "react-redux";
 import {IngredientCard} from "../ingredients-card/ingredient-card";
+import {useSelector} from "../../index";
 
 export const FeedOrders = () => {
     const {orders, total, totalToday} = useSelector(
         (store: any) => store.reducerWs
     );
     let done: any[] = []
-    orders.forEach((item: any) => {
+    orders.forEach((item: { status: string; number: number; }) => {
         if (item.status === 'done') {
             done.push(item.number)
         }

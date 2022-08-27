@@ -2,12 +2,12 @@
 import React, {useEffect} from "react";
 import styles from "./feed-block.module.css";
 import {FeedCard} from "../feed-card/feed-card";
-import {useDispatch, useSelector} from "react-redux";
-import {getFeed} from "../../services/api/api";
+import {getFeed} from "../../services/api/apiIngredients";
 import {useLocation} from "react-router-dom";
+import {useDispatch, useSelector} from "../../index";
 
 
-export const FeedBlock = () => {
+export const FeedBlock = (props: { path: string }) => {
     const {pathname} = useLocation();
 
     const {orders} = useSelector(
@@ -20,7 +20,6 @@ export const FeedBlock = () => {
     useEffect(() => {
         dispatch(getFeed());
     }, []);
-    console.log(orders)
     return (
         <section className={pathname === "/feed"
             ? styles.block
@@ -32,7 +31,8 @@ export const FeedBlock = () => {
                         return ingredientData.find((ingredient: { _id: string; }) => item === ingredient._id)
                     })
                     return (
-                        <FeedCard key={item._id} id={item._id} orderIngredients={orderIngredients} item={item}
+                        <FeedCard path={props.path} key={item._id} id={item._id} orderIngredients={orderIngredients}
+                                  item={item}
                         />
                     );
                 })}

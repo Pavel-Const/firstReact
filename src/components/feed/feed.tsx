@@ -3,9 +3,9 @@ import React, {useEffect} from "react";
 import styles from "./feed.module.css";
 import {FeedBlock} from "../feed-block/feed-block";
 import {FeedOrders} from "../feed-orders/feed-orders";
-import {useDispatch, useSelector} from "react-redux";
 import {WS_CONNECTION_CLOSE, WS_CONNECTION_START} from "../../services/actions/actionsWs";
 import {wsUrl} from "../../services/api/url";
+import {useDispatch} from "../../index";
 
 
 export const Feed = () => {
@@ -22,7 +22,7 @@ export const Feed = () => {
     );
     return (
         <section className={[styles.main, 'container'].join(" ")}>
-            <FeedBlock/>
+            <FeedBlock path={'feed'}/>
             <FeedOrders/>
         </section>
     );

@@ -5,75 +5,21 @@ import {
     AUTH_TOKEN,
     GET_USER_INFO, RESET_PASSWORD, UPDATE_USER_INFO
 } from "../actions/actionsAuthorization";
-import {
-    GET_INGREDIENTS_LIST,
-} from "../actions/actionsIngredients";
-import {
-    GET_ORDER_INFO
-} from "../actions/actionsOrder";
-
 import {baseUrl} from "./url";
 import {deleteCookie, getCookie, setCookie} from "../utils";
-import {IForms, ingredientTypeReq} from "../utils/types";
+import {IForms} from "../utils/types";
+import {AppDispatch, AppThunk} from "../../index";
+import App from "../../components/app/App";
 
-function checkResponse(res: { ok: any; json: () => any; status: any; }) {
+function checkResponse(res: Response) {
     if (res.ok) {
         return res.json();
     }
     return Promise.reject(`Ошибка ${res.status}`);
 }
 
-export function getFeed() {
-    return function (dispatch: (arg0: { type: string; dataProduct: Array<ingredientTypeReq>; }) => void) {
-        fetch(`${baseUrl}/ingredients`)
-            .then(checkResponse)
-            .then((json) => {
-                if (json.success) {
-                    dispatch({
-                        type: GET_INGREDIENTS_LIST,
-                        dataProduct: json.data,
-                    });
-                } else {
-                    alert(json.message);
-                }
-            })
-            .catch((error) => {
-                alert(error);
-            });
-    };
-}
-
-export function getOrderInfo(id: string[], token: string) {
-    return function (dispatch: (arg0: { type: string; order: number; open: boolean; }) => void) {
-        fetch(`${baseUrl}/orders`, {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                Authorization: token
-            },
-            body: JSON.stringify({ingredients: id}),
-        })
-            .then(checkResponse)
-            .then((json) => {
-                if (json.success) {
-                    dispatch({
-                        type: GET_ORDER_INFO,
-                        order: json.order.number,
-                        open: true,
-                    });
-                } else {
-                    alert(json.message);
-                }
-            })
-            .catch((error) => {
-                alert(error);
-            });
-    };
-}
-
-export function passwordReset(form: IForms) {
-    return function (dispatch: (arg0: { type: string; }) => void) {
+export const passwordReset = (form: IForms): AppThunk => {
+    return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}/password-reset`, {
             method: "POST",
             headers: {
@@ -98,7 +44,7 @@ export function passwordReset(form: IForms) {
     }
 }
 
-export function passwordNew(form: IForms) {
+export const passwordNew = (form: IForms) => {
     fetch(`${baseUrl}/password-reset/reset`, {
         method: "POST",
         headers: {
@@ -123,8 +69,8 @@ export function passwordNew(form: IForms) {
         });
 }
 
-export function register(form: IForms) {
-    return function (dispatch: (arg0: { type: string; name: string; email: string; token: string; }) => void) {
+export function register(form: IForms): AppThunk {
+    return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}/auth/register`, {
             method: "POST",
             headers: {
@@ -158,8 +104,8 @@ export function register(form: IForms) {
     }
 }
 
-export function login(form: IForms) {
-    return function (dispatch: (arg0: { type: string; name: string; email: string; token: string; }) => void) {
+export function login(form: IForms): AppThunk {
+    return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}/auth/login`, {
             method: "POST",
             headers: {
@@ -192,8 +138,8 @@ export function login(form: IForms) {
     }
 }
 
-export function logout(token: string | undefined) {
-    return function (dispatch: (arg0: { type: string; }) => void) {
+export function logout(token: string | undefined): AppThunk {
+    return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}/auth/logout`, {
             method: "POST",
             headers: {
@@ -208,6 +154,7 @@ export function logout(token: string | undefined) {
             .then((json) => {
                 if (json.success) {
                     deleteCookie('token');
+                    deleteCookie('accessToken');
                     dispatch({
                         type: AUTH_LOGOUT,
                     });
@@ -221,8 +168,8 @@ export function logout(token: string | undefined) {
     }
 }
 
-export const getToken = (token: string | undefined) => {
-    return async function (dispatch: (arg0: { type: string; token: string; }) => void) {
+export const getToken = (): AppThunk => {
+    return async function (dispatch: AppDispatch) {
         await fetch(`${baseUrl}/auth/token`, {
             method: "POST",
             headers: {
@@ -247,21 +194,27 @@ export const getToken = (token: string | undefined) => {
                 }
             })
             .catch((error) => {
-                alert(error);
+                alert(error.message);
             });
     }
 }
-
-// export const fetchWithRefresh = async (url, options) => {
+// const saveTokens = (refreshToken: string, accessToken: string | number | boolean | null) => {
+//     setCookie('accessToken', accessToken);
+//     setCookie('token', refreshToken);
+// }
+// export const fetchWithRefresh = async (url: RequestInfo | URL, options: RequestInit | undefined) => {
 //     try {
 //         const res = await fetch(url, options);
 //
 //         return await checkResponse(res);
 //     } catch (err) {
+//         // @ts-ignore
 //         if (err.message === 'jwt expired') {
+//             // @ts-ignore
 //             const {refreshToken, accessToken} = await getToken();
 //             saveTokens(refreshToken, accessToken);
 //
+//             // @ts-ignore
 //             options.headers.authorization = accessToken;
 //
 //             const res = await fetch(url, options);
@@ -273,8 +226,8 @@ export const getToken = (token: string | undefined) => {
 //     }
 // }
 
-export function getUser(token: string) {
-    return function (dispatch: (arg0: { type: string; name: string; email: string; }) => void) {
+export function getUser(token: string): AppThunk {
+    return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}/auth/user`, {
             method: "GET",
             // @ts-ignore
@@ -283,10 +236,10 @@ export function getUser(token: string) {
                 "Content-Type": "application/json",
                 Authorization: token
             },
-
         })
             .then(checkResponse)
             .then((json) => {
+
                 if (json.success) {
                     dispatch({
                         type: GET_USER_INFO,
@@ -294,17 +247,16 @@ export function getUser(token: string) {
                         email: json.user.email,
                     });
                 } else {
-                    console.log(json.message);
                 }
             })
             .catch((error) => {
-                alert(error);
+                console.log(error)
             });
     }
 }
 
-export function updateUser(form: IForms & { password: string | number }) {
-    return function (dispatch: (arg0: { type: string; name: string; email: string; }) => void) {
+export function updateUser(form: IForms & { password: string | number }): AppThunk {
+    return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}/auth/user`, {
             method: "PATCH",
             // @ts-ignore

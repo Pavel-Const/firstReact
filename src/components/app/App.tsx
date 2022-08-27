@@ -13,7 +13,6 @@ import {BurgerIngredients} from "../burger-indredients/burger-ingredients";
 import {BurgerConstructor} from "../burger-constructor/burger-constructor";
 import {OrderDetails} from "../order-detail/order-detail";
 import {IngredientDetails} from "../ingredient-detail/ingredient-detail";
-import {useDispatch, useSelector} from "react-redux";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import Modal from "../modal/modal";
@@ -27,12 +26,11 @@ import {Profile} from "../../pages/profile/profile";
 import {ProtectedRoute} from "../protected-route/protected-route";
 import {Feed} from "../feed/feed";
 import {FeedDetail} from "../feed-detail/feed-detail";
-import {WS_CONNECTION_START} from "../../services/actions/actionsWs";
+import {useDispatch, useSelector} from "../../index";
 
 interface ILocation {
     background?: Location
 }
-
 
 const App = () => {
     const dispatch = useDispatch();
@@ -51,7 +49,7 @@ const App = () => {
         });
     };
     const {open, kind, order} = useSelector(
-        (store: any) => store.reduceOrder.modalInfo
+        (store) => store.reduceOrder.modalInfo
     );
     return (
         <div className="App">
@@ -84,7 +82,7 @@ const App = () => {
                     <Feed/>
                 </Route>
                 <Route path={"/feed/:id"} exact>
-                    <FeedDetail/>
+                    <FeedDetail type={'feed'}/>
                 </Route>
                 <ProtectedRoute path={"/profile"} exact>
                     <Profile/>
@@ -93,7 +91,7 @@ const App = () => {
                     <Profile/>
                 </ProtectedRoute>
                 <ProtectedRoute path={"/profile/orders/:id"} exact>
-                    <FeedDetail/>
+                    <FeedDetail type={'lc'}/>
                 </ProtectedRoute>
             </Switch>
 
@@ -113,17 +111,17 @@ const App = () => {
                             isOpen={background}
                             closeModal={closeModal}
                         >
-                            <FeedDetail/>
+                            <FeedDetail type={'feed'}/>
                         </Modal>
                     </Route>
-                    <Route path={"/profile/orders/:id"}>
+                    <ProtectedRoute path={"/profile/orders/:id"} exact>
                         <Modal
                             isOpen={background}
                             closeModal={closeModal}
                         >
-                            <FeedDetail/>
+                            <FeedDetail type={'lc'}/>
                         </Modal>
-                    </Route>
+                    </ProtectedRoute>
                 </>
             )}
             {open && (

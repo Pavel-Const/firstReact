@@ -5,10 +5,28 @@ import {
     GET_TOTAL_PRICE,
     DELETE_CONSTRUCTOR_ITEM,
     COUNTER_CONSTRUCTOR_ITEM,
-    CHANGE_PRODUCT_CONSTRUCTOR,
+    CHANGE_PRODUCT_CONSTRUCTOR, TActionsIngredients,
 } from "../actions/actionsIngredients";
 
-const initialState = {
+type TInitialState = {
+    ingredientList: {
+        ingredientData: any[],
+        load: boolean,
+        counter?: any[],
+    },
+    ingredientListConstructor: {
+        buns: any[],
+        other: any[],
+    },
+    totalPrice: string,
+    modalInfo: {
+        open: boolean,
+        title: string,
+        kind: string,
+        ingredientItem: any[]
+    },
+}
+const initialState: TInitialState = {
     ingredientList: {
         ingredientData: [],
         load: false,
@@ -19,22 +37,16 @@ const initialState = {
         other: [],
     },
     totalPrice: "",
+    modalInfo: {
+        open: false,
+        title: '',
+        kind: "",
+        ingredientItem: []
+    },
 };
 
-export interface IIngredientsAction {
-    type: string;
-    dataProduct: [];
-    title: string;
-    id: string;
-    kind: string;
-    newId: any;
-    count: any;
-    index: number;
-    dragIndex: number;
-    hoverIndex: number;
-};
 
-export const reduceIngredients = (state = initialState, action: IIngredientsAction) => {
+export const reduceIngredients = (state = initialState, action: TActionsIngredients): TInitialState => {
     switch (action.type) {
         case GET_INGREDIENTS_LIST: {
             return {
@@ -61,7 +73,6 @@ export const reduceIngredients = (state = initialState, action: IIngredientsActi
         }
         case ADD_PRODUCT_CONSTRUCTOR: {
             if (action.kind === "bun") {
-
                 return {
                     ...state,
                     ingredientListConstructor: {
@@ -81,7 +92,6 @@ export const reduceIngredients = (state = initialState, action: IIngredientsActi
                         return {...a};
                     })
                     .filter((item) => item._id === action.id)[0];
-
                 newOther.newId = action.newId;
 
                 return {
@@ -140,15 +150,17 @@ export const reduceIngredients = (state = initialState, action: IIngredientsActi
         }
         case CHANGE_PRODUCT_CONSTRUCTOR: {
             const ingredients = [...state.ingredientListConstructor.other];
-            ingredients.splice(action.dragIndex, 1);
-            ingredients.splice(
-                action.hoverIndex,
-                0,
-                [...state.ingredientListConstructor.other].splice(
-                    action.dragIndex,
-                    1
-                )[0]
-            );
+            if (action.dragIndex && action.hoverIndex) {
+                ingredients.splice(action.dragIndex, 1);
+                ingredients.splice(
+                    action.hoverIndex,
+                    0,
+                    [...state.ingredientListConstructor.other].splice(
+                        action.dragIndex,
+                        1
+                    )[0]
+                );
+            }
             return {
                 ...state,
                 ingredientListConstructor: {

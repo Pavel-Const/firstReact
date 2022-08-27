@@ -6,31 +6,12 @@ import {
     GET_USER_INFO,
     UPDATE_USER_INFO,
     IS_AUTH,
-    RESET_PASSWORD,
+    RESET_PASSWORD, TActionsAuthorization,
 } from "../actions/actionsAuthorization";
 import {getCookie} from "../utils";
 
-const initialState = {
+type TUserState = {
     user: {
-        name: "",
-        email: "",
-    },
-    accessToken: null,
-    loader: false,
-    userAuth: "",
-    passReset: false,
-};
-
-
-export interface IUserAction {
-    type: string,
-    name: string,
-    email: string,
-    token: number,
-};
-
-export interface IUserState {
-    user?: {
         name: string,
         email: string,
     },
@@ -39,8 +20,19 @@ export interface IUserState {
     userAuth?: string | boolean,
     passReset?: boolean,
 };
+const initialState: TUserState = {
+    user: {
+        name: "",
+        email: "",
+    },
+    accessToken: null,
+    loader: false,
+    userAuth: false,
+    passReset: false,
+};
 
-export const reduceAuthorization = (state = initialState, action: IUserAction): IUserState => {
+
+export const reduceAuthorization = (state = initialState, action: TActionsAuthorization): TUserState => {
     switch (action.type) {
         case AUTH_REGISTER:
             return {
@@ -62,14 +54,10 @@ export const reduceAuthorization = (state = initialState, action: IUserAction): 
                 userAuth: true,
             };
         case AUTH_LOGOUT:
+            console.log('logout')
             return {
                 ...state,
-                user: {
-                    name: "",
-                    email: "",
-                },
-                accessToken: null,
-                userAuth: false,
+                userAuth: false
             };
         case AUTH_TOKEN:
             return {
@@ -92,6 +80,7 @@ export const reduceAuthorization = (state = initialState, action: IUserAction): 
                     name: action.name,
                     email: action.email,
                 },
+                userAuth: true
             };
         case IS_AUTH:
             if (getCookie("token")) {

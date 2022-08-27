@@ -4,10 +4,10 @@ import {
     CurrencyIcon,
     Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import {ingredientType} from "../../services/utils/types";
 import {Link, useLocation} from "react-router-dom";
+import {useSelector} from "../../index";
 
 export const IngredientCard: FC<ingredientType & { id: string, typeIng: string }> = (props) => {
     const location = useLocation();

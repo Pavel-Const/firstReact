@@ -1,18 +1,18 @@
 /* eslint-disable no-lone-blocks */
 import React, {useEffect, useState} from "react";
 import ingredientStyles from "./burger-ingredients.module.css";
-import {useSelector, useDispatch} from "react-redux";
 import {Tab as TabUI} from "@ya.praktikum/react-developer-burger-ui-components";
 import {IngredientBlock} from "../ingredients-block/ingredient-block";
-import {getFeed} from "../../services/api/api";
+import {getFeed} from "../../services/api/apiIngredients";
 import {ingredientTypeReq, TRef} from "../../services/utils/types";
+import {useDispatch, useSelector} from "../../index";
 
 export const BurgerIngredients = () => {
     const [current, setCurrent] = useState("one");
     const {ingredientData, load} = useSelector(
         (store: any) => store.reduceIngredients.ingredientList
     );
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const Tab: React.FC<{
         active: boolean;
         value: string;
@@ -20,6 +20,7 @@ export const BurgerIngredients = () => {
         children: React.ReactNode;
     }> = TabUI;
     useEffect(() => {
+        // @ts-ignore
         dispatch(getFeed());
     }, [dispatch]);
 

@@ -5,10 +5,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";
 import React, {useState, useEffect} from "react";
-import {passwordReset} from "../../services/api/api";
-import {useDispatch, useSelector} from "react-redux";
+import {passwordReset} from "../../services/api/apiAuth";
 import {IS_AUTH} from "../../services/actions/actionsAuthorization";
 import {IButton, IPrevent, ITargetValue} from "../../services/utils/types";
+import {useDispatch, useSelector} from "../../index";
 
 type TFormState = {
     email: string
