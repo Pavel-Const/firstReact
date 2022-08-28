@@ -12,38 +12,44 @@ import {useDispatch, useSelector} from "../../index";
 
 export const FeedDetail = (props: { type?: string }) => {
     const {orders, getData} = useSelector(
-        (store: any) => store.reducerWs
+        (store) => store.reducerWs
     );
     const {id} = useParams<{ id?: string }>();
     const product = orders.filter((item: { _id: string }) => {
         return item._id === id;
     });
     const {ingredientData} = useSelector(
-        (store: any) => store.reduceIngredients.ingredientList
+        (store) => store.reduceIngredients.ingredientList
     );
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const history = useHistory();
     const accessToken: string | undefined = getCookie('accessToken')
-    let date = new Date(product[0].createdAt)
+    let date: any;
 
-    function addLeadZero(val: any) {
+    if (getData) {
+        date = new Date(product[0].createdAt)
+    }
+
+    function addLeadZero(val: number) {
         if (+val < 10) return '0' + val;
         return val;
     };
     useEffect(() => {
-        console.log(accessToken, props.type, history.action)
         if ((history.action === "POP" || history.action === "REPLACE") && props.type === 'feed') {
             dispatch({type: WS_CONNECTION_START, url: wsUrl});
+            // @ts-ignore
             dispatch(getFeed());
             return () => {
                 dispatch({type: WS_CONNECTION_CLOSE});
             }
         }
         if ((history.action === "POP" || history.action === "REPLACE") && props.type === 'lc') {
+            // @ts-ignore
             dispatch(getFeed());
             if (accessToken) {
                 // @ts-ignore
                 let authToken = accessToken.split('Bearer ')[1];
+                // @ts-ignore
                 dispatch(getUser(accessToken));
                 dispatch({
                     type: WS_CONNECTION_START,
@@ -53,6 +59,7 @@ export const FeedDetail = (props: { type?: string }) => {
                     dispatch({type: WS_CONNECTION_CLOSE});
                 }
             } else {
+                // @ts-ignore
                 dispatch(getToken());
                 // @ts-ignore
                 loader && dispatch(getUser(accessToken));
@@ -75,12 +82,12 @@ export const FeedDetail = (props: { type?: string }) => {
         orderIngredientsNoDuble = Object.keys(counts).map((item: string) => {
             return ingredientData.find((ingredient: { _id: string; }) => item === ingredient._id)
         })
-        product.map((item: any) => {
+        product.map((item) => {
             orderIngredients = item.ingredients.map((item: string) => {
                 return ingredientData.find((ingredient: { _id: string; }) => item === ingredient._id)
             })
         })
-        orderIngredients.forEach((item: any) => {
+        orderIngredients.forEach((item) => {
             // @ts-ignore
             return totalPriceArr.push(item.price);
         })

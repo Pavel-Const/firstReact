@@ -12,7 +12,7 @@ import {useSelector} from "../../index";
 export const IngredientCard: FC<ingredientType & { id: string, typeIng: string }> = (props) => {
     const location = useLocation();
     const {counter} = useSelector(
-        (store: any) => store.reduceIngredients.ingredientList
+        (store) => store.reduceIngredients.ingredientList
     );
 
     let count: any = 0;

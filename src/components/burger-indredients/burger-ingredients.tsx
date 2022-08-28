@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from "../../index";
 export const BurgerIngredients = () => {
     const [current, setCurrent] = useState("one");
     const {ingredientData, load} = useSelector(
-        (store: any) => store.reduceIngredients.ingredientList
+        (store) => store.reduceIngredients.ingredientList
     );
     const dispatch = useDispatch();
     const Tab: React.FC<{

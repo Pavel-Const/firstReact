@@ -12,14 +12,15 @@ import {useDispatch, useSelector} from "../../index";
 
 export const IngredientDetails = () => {
     const {ingredientData, load} = useSelector(
-        (store: any) => store.reduceIngredients.ingredientList
+        (store) => store.reduceIngredients.ingredientList
     );
     const {id} = useParams<{ id?: string }>();
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const history = useHistory();
 
     useEffect(() => {
         if (history.action === "POP") {
+            // @ts-ignore
             dispatch(getFeed());
         }
     }, [dispatch]);
@@ -28,7 +29,7 @@ export const IngredientDetails = () => {
         return item._id === id;
     });
     return (
-        load && (
+        load ? (
             <>
                 <div className={[styles.content, "pb-5"].join(" ")}>
                     <img
@@ -73,7 +74,7 @@ export const IngredientDetails = () => {
                     </div>
                 </div>
             </>
-        )
+        ) : null
     );
 };
 

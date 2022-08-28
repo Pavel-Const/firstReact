@@ -11,12 +11,12 @@ import {useDispatch, useSelector} from "../../index";
 
 export const ConstructorOrder = (props: { id: Array<string> }) => {
     const {totalPrice, ingredientListConstructor} = useSelector(
-        (store: any) => store.reduceIngredients
+        (store) => store.reduceIngredients
     );
-    const {userAuth, accessToken} = useSelector((store: any) => store.reduceAuthorization);
+    const {userAuth, accessToken} = useSelector((store) => store.reduceAuthorization);
 
     const history = useHistory();
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const Button: React.FC<{
         type?: 'secondary' | 'primary';
         size?: 'small' | 'medium' | 'large';
@@ -33,6 +33,7 @@ export const ConstructorOrder = (props: { id: Array<string> }) => {
     }, [ingredientListConstructor]);
     const open = () => {
         if (ingredientListConstructor.buns.length && userAuth) {
+            // @ts-ignore
             return dispatch(getOrderInfo(props.id, accessToken));
         } else {
             history.replace({

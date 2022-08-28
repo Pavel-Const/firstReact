@@ -17,6 +17,7 @@ import {
     ConstructorEmptyTop,
 } from "../constructor-empty/constructor-empty";
 import {useDispatch, useSelector} from "../../index";
+import {ingredientType, ingredientTypeReq} from "../../services/utils/types";
 
 export const BurgerConstructor = () => {
     const {ingredientList, ingredientListConstructor} = useSelector(
@@ -56,7 +57,7 @@ export const BurgerConstructor = () => {
 
     const [, dropTarget] = useDrop({
         accept: "product",
-        drop(item: any) {
+        drop(item: { id: string, type: string }) {
             dispatch({
                 type: ADD_PRODUCT_CONSTRUCTOR,
                 id: item.id,
@@ -103,7 +104,7 @@ export const BurgerConstructor = () => {
                         >
                             {ingredientListConstructor.other.length ? (
                                 ingredientListConstructor.other.map(
-                                    (item: any, index: number) => (
+                                    (item: ingredientTypeReq, index: number) => (
                                         <ConstructorCard
                                             key={item.newId}
                                             index={index}

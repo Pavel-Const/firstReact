@@ -7,24 +7,27 @@ import {useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "../../index";
 
 
-export const FeedBlock = (props: { path: string }) => {
+export const FeedBlock = (props: { path: string, title: string }) => {
     const {pathname} = useLocation();
 
     const {orders} = useSelector(
-        (store: any) => store.reducerWs
+        (store) => store.reducerWs
     );
     const {ingredientData, load} = useSelector(
-        (store: any) => store.reduceIngredients.ingredientList
+        (store) => store.reduceIngredients.ingredientList
     );
-    const dispatch: any = useDispatch()
+    const dispatch = useDispatch()
     useEffect(() => {
+        // @ts-ignore
         dispatch(getFeed());
     }, []);
     return (
         <section className={pathname === "/feed"
             ? styles.block
             : styles.block__profile}>
-            <h1 className={[styles.title, 'text text_type_main-large'].join(" ")}>Лента заказов</h1>
+            <h1 className={[styles.title, 'text text_type_main-large'].join(" ")}>
+                {props.title}
+            </h1>
             <div className={[styles.list, "scrollCustom"].join(" ")}>
                 {load && orders.map((item: any) => {
                     let orderIngredients = item.ingredients.map((item: string) => {

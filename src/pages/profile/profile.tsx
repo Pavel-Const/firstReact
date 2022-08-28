@@ -11,6 +11,7 @@ import {WS_CONNECTION_CLOSE, WS_CONNECTION_START} from "../../services/actions/a
 import {FeedBlock} from "../../components/feed-block/feed-block";
 import {useDispatch, useSelector} from "../../index";
 import {IS_AUTH} from "../../services/actions/actionsAuthorization";
+import {wsUrlAuth} from "../../services/api/url";
 
 type TFormState = {
     name: string
@@ -84,13 +85,12 @@ export const Profile = () => {
         dispatch(getFeed());
         setValue({...form, name: user.name, login: user.email});
         if (accessToken) {
-            // @ts-ignore
             let authToken = accessToken.split('Bearer ')[1];
             // @ts-ignore
             dispatch(getUser(accessToken));
             dispatch({
                 type: WS_CONNECTION_START,
-                url: `wss://norma.nomoreparties.space/orders?token=${authToken}`
+                url: wsUrlAuth
             });
             return () => {
                 dispatch({type: WS_CONNECTION_CLOSE});
@@ -228,7 +228,7 @@ export const Profile = () => {
                     styles.orders,
                     "scrollCustom",
                 ].join(" ")}>
-                    <FeedBlock path={'profile/orders'}/>
+                    <FeedBlock path={'profile/orders'} title={"История заказов"}/>
                 </div>
             )}
         </div>

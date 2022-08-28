@@ -9,7 +9,7 @@ interface IProps {
 }
 
 export const ProtectedRoute: FC<RouteProps> = ({children, ...rest}) => {
-    const {userAuth} = useSelector((store: any) => store.reduceAuthorization);
+    const {userAuth} = useSelector((store) => store.reduceAuthorization);
 
     return (
         <Route

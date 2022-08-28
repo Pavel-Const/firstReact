@@ -21,14 +21,14 @@ export interface IUserRegister {
     readonly type: typeof AUTH_REGISTER;
     name: string,
     email: string,
-    token: number,
+    token: string,
 };
 
 export interface IUserLogin {
     readonly type: typeof AUTH_LOGIN;
     name: string,
     email: string,
-    token: number,
+    token: string,
 };
 
 export interface IUserLogout {
@@ -38,7 +38,7 @@ export interface IUserLogout {
 
 export interface IUserToken {
     readonly type: typeof AUTH_TOKEN;
-    token: number,
+    token: string,
 };
 
 export interface IUserInfo {

@@ -21,6 +21,7 @@ export interface ingredientTypeReq {
     type: string,
     __v: number,
     _id: string,
+    newId: string
 };
 
 export type TRef = HTMLDivElement | null

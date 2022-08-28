@@ -17,9 +17,9 @@ type TFormState = {
 export const ForgotPassword = () => {
     const Button: React.FC<IButton> = ButtonUI;
     const [form, setValue] = useState<TFormState>({email: ""});
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const {userAuth, passReset} = useSelector(
-        (store: any) => store.reduceAuthorization
+        (store) => store.reduceAuthorization
     );
     const history = useHistory();
     const onChange = (e: ITargetValue) => {
@@ -27,6 +27,7 @@ export const ForgotPassword = () => {
     };
     const onSubmit = (e: IPrevent) => {
         e.preventDefault();
+        // @ts-ignore
         dispatch(passwordReset(form));
     };
     useEffect(() => {

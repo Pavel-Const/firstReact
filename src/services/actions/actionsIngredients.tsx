@@ -31,7 +31,7 @@ export interface IProductConstructorAction {
     kind: string;
     readonly type: typeof ADD_PRODUCT_CONSTRUCTOR;
     id: string;
-    newId: any;
+    newId: string;
 };
 
 export interface ITotalPrice {

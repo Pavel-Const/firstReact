@@ -24,7 +24,7 @@ export const Register = () => {
     const [form, setValue] = useState<TFormState>({name: "", email: "", password: ""});
     const [visiblePassword, setVisible] = useState(false);
     const dispatch = useDispatch();
-    const {userAuth} = useSelector((store: any) => store.reduceAuthorization);
+    const {userAuth} = useSelector((store) => store.reduceAuthorization);
     const location = useLocation<ILocation>();
     const Button: React.FC<IButton> = ButtonUI;
 

@@ -8,7 +8,6 @@ export type TActionsOrder =
 
 export interface IOrderInfo {
     readonly type: typeof GET_ORDER_INFO;
-
     open: boolean;
     order: string
 };

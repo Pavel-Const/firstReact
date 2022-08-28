@@ -22,7 +22,7 @@ export const Feed = () => {
     );
     return (
         <section className={[styles.main, 'container'].join(" ")}>
-            <FeedBlock path={'feed'}/>
+            <FeedBlock path={'feed'} title={'Лента заказов'}/>
             <FeedOrders/>
         </section>
     );

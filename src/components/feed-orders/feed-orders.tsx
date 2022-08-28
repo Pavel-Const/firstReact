@@ -6,7 +6,7 @@ import {useSelector} from "../../index";
 
 export const FeedOrders = () => {
     const {orders, total, totalToday} = useSelector(
-        (store: any) => store.reducerWs
+        (store) => store.reducerWs
     );
     let done: any[] = []
     orders.forEach((item: { status: string; number: number; }) => {

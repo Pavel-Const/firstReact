@@ -45,7 +45,7 @@ export const FeedCard = (props: { path: string; id: string; orderIngredients: an
             <div className={[styles.foot].join(" ")}>
                 <div className={[styles.box].join(" ")}>
                     {(props.orderIngredients.length < 6) ?
-                        props.orderIngredients.map((item: any, index) => {
+                        props.orderIngredients.map((item, index) => {
                             if (item !== undefined) {
                                 if (props.orderIngredients.length < 6) {
                                     return (
@@ -56,7 +56,7 @@ export const FeedCard = (props: { path: string; id: string; orderIngredients: an
                                 }
                             }
                         })
-                        : (props.orderIngredients.map((item: any, index) => {
+                        : (props.orderIngredients.map((item, index) => {
                             if (index < 5) {
                                 return (
                                     <div key={index} style={{zIndex: 6 - index}} className={[styles.item].join(" ")}>

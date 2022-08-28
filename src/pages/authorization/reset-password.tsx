@@ -20,7 +20,7 @@ export const ResetPassword = () => {
     const [visiblePassword, setVisible] = useState(false);
     const dispatch = useDispatch();
     const {userAuth, passReset} = useSelector(
-        (store: any) => store.reduceAuthorization
+        (store) => store.reduceAuthorization
     );
     const onChange = (e: ITargetValue) => {
         setValue({...form, [e.target.name]: e.target.value});
