@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-import {getFeed} from "../../services/api/apiIngredients";
 import {useDrop} from "react-dnd";
 import shortid from "shortid";
 
@@ -17,7 +16,7 @@ import {
     ConstructorEmptyTop,
 } from "../constructor-empty/constructor-empty";
 import {useDispatch, useSelector} from "../../index";
-import {ingredientType, ingredientTypeReq} from "../../services/utils/types";
+import {ingredientTypeReq} from "../../services/utils/types";
 
 export const BurgerConstructor = () => {
     const {ingredientList, ingredientListConstructor} = useSelector(
@@ -67,11 +66,6 @@ export const BurgerConstructor = () => {
         },
     });
 
-    useEffect(() => {
-        // @ts-ignore
-        dispatch(getFeed());
-    }, []);
-
     let arrayId: string[] = [];
     ingredientListConstructor.other.forEach((item: { _id: string }) => {
         arrayId.push(item._id);
@@ -91,6 +85,7 @@ export const BurgerConstructor = () => {
                                 price={ingredientListConstructor.buns[0].price}
                                 src={ingredientListConstructor.buns[0].image}
                                 type="top"
+                                index={0}
                             />
                         ) : (
                             <ConstructorEmptyTop name={`Булка (верх)`}/>
@@ -127,6 +122,7 @@ export const BurgerConstructor = () => {
                                 price={ingredientListConstructor.buns[0].price}
                                 src={ingredientListConstructor.buns[0].image}
                                 type="bottom"
+                                index={0}
                             />
                         ) : (
                             <ConstructorEmptyBottom name={`Булка (низ)`}/>

@@ -27,7 +27,6 @@ export const ForgotPassword = () => {
     };
     const onSubmit = (e: IPrevent) => {
         e.preventDefault();
-        // @ts-ignore
         dispatch(passwordReset(form));
     };
     useEffect(() => {

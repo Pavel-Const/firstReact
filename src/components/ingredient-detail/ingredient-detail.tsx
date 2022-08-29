@@ -1,30 +1,15 @@
 import styles from "./ingredient-detail.module.css";
-import PropTypes from "prop-types";
-import React, {useEffect} from "react";
+import React from "react";
 import {
-    useHistory,
-    useLocation,
-    useParams,
-    useRouteMatch,
+    useParams
 } from "react-router-dom";
-import {getFeed} from "../../services/api/apiIngredients";
-import {useDispatch, useSelector} from "../../index";
+import {useSelector} from "../../index";
 
 export const IngredientDetails = () => {
     const {ingredientData, load} = useSelector(
         (store) => store.reduceIngredients.ingredientList
     );
     const {id} = useParams<{ id?: string }>();
-    const dispatch = useDispatch();
-    const history = useHistory();
-
-    useEffect(() => {
-        if (history.action === "POP") {
-            // @ts-ignore
-            dispatch(getFeed());
-        }
-    }, [dispatch]);
-
     const product = ingredientData.filter((item: { _id: string }) => {
         return item._id === id;
     });

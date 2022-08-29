@@ -1,8 +1,7 @@
 /* eslint-disable no-lone-blocks */
-import React, {useEffect} from "react";
+import React from "react";
 import styles from "./feed-block.module.css";
 import {FeedCard} from "../feed-card/feed-card";
-import {getFeed} from "../../services/api/apiIngredients";
 import {useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "../../index";
 
@@ -16,11 +15,6 @@ export const FeedBlock = (props: { path: string, title: string }) => {
     const {ingredientData, load} = useSelector(
         (store) => store.reduceIngredients.ingredientList
     );
-    const dispatch = useDispatch()
-    useEffect(() => {
-        // @ts-ignore
-        dispatch(getFeed());
-    }, []);
     return (
         <section className={pathname === "/feed"
             ? styles.block

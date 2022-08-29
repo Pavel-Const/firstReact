@@ -3,7 +3,6 @@ import React, {useEffect} from "react";
 import styles from "./feed-detail.module.css";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import {useHistory, useParams} from "react-router-dom";
-import {getFeed} from "../../services/api/apiIngredients";
 import {getToken, getUser} from "../../services/api/apiAuth";
 import {WS_CONNECTION_CLOSE, WS_CONNECTION_START} from "../../services/actions/actionsWs";
 import {wsUrl} from "../../services/api/url";
@@ -37,19 +36,13 @@ export const FeedDetail = (props: { type?: string }) => {
     useEffect(() => {
         if ((history.action === "POP" || history.action === "REPLACE") && props.type === 'feed') {
             dispatch({type: WS_CONNECTION_START, url: wsUrl});
-            // @ts-ignore
-            dispatch(getFeed());
             return () => {
                 dispatch({type: WS_CONNECTION_CLOSE});
             }
         }
         if ((history.action === "POP" || history.action === "REPLACE") && props.type === 'lc') {
-            // @ts-ignore
-            dispatch(getFeed());
             if (accessToken) {
-                // @ts-ignore
                 let authToken = accessToken.split('Bearer ')[1];
-                // @ts-ignore
                 dispatch(getUser(accessToken));
                 dispatch({
                     type: WS_CONNECTION_START,
@@ -59,7 +52,6 @@ export const FeedDetail = (props: { type?: string }) => {
                     dispatch({type: WS_CONNECTION_CLOSE});
                 }
             } else {
-                // @ts-ignore
                 dispatch(getToken());
                 // @ts-ignore
                 loader && dispatch(getUser(accessToken));

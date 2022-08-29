@@ -34,7 +34,6 @@ export const Login = () => {
     };
     const logIn = (e: IPrevent) => {
         e.preventDefault();
-        // @ts-ignore
         return dispatch(login(form));
     };
     useEffect(() => {

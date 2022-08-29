@@ -10,8 +10,11 @@ export const FeedCard = (props: { path: string; id: string; orderIngredients: Ar
     const location = useLocation();
     let totalPriceArr: number[] = [];
     props.orderIngredients.forEach((item) => {
-        return totalPriceArr.push(item.price);
+        if (item) {
+            return totalPriceArr.push(item.price);
+        }
     })
+
 
     // @ts-ignore
     let totalPrice = totalPriceArr.reduce((a, b) => a + b)

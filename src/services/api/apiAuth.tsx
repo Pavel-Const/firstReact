@@ -230,7 +230,6 @@ export function getUser(token: string): AppThunk {
     return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}/auth/user`, {
             method: "GET",
-            // @ts-ignore
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",

@@ -36,7 +36,6 @@ export const Register = () => {
     };
     const registration = (e: IPrevent) => {
         e.preventDefault();
-        // @ts-ignore
         return dispatch(register(form));
     };
     useEffect(() => {

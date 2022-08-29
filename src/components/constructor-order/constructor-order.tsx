@@ -33,7 +33,6 @@ export const ConstructorOrder = (props: { id: Array<string> }) => {
     }, [ingredientListConstructor]);
     const open = () => {
         if (ingredientListConstructor.buns.length && userAuth) {
-            // @ts-ignore
             return dispatch(getOrderInfo(props.id, accessToken));
         } else {
             history.replace({

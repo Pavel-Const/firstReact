@@ -15,7 +15,7 @@ import {useDispatch} from "../../index";
 export const ConstructorCard: FC<ingredientType & {
     group?: string,
     isLocked?: boolean,
-    index?: number,
+    index: number,
 }> = (props) => {
     const ref = useRef<HTMLDivElement>(null);
     const [{isDrag}, dragref] = useDrag({
@@ -69,7 +69,6 @@ export const ConstructorCard: FC<ingredientType & {
     const deleteItem = () => {
         dispatch({
             type: DELETE_CONSTRUCTOR_ITEM,
-            // @ts-ignore
             index: props.index,
         });
     };

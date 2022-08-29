@@ -2,7 +2,6 @@ import styles from "./profile.module.css";
 import {NavLink, Redirect, useLocation} from "react-router-dom";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {useEffect, useRef, useState} from "react";
-import {getFeed} from "../../services/api/apiIngredients";
 import {getToken, getUser, logout, updateUser} from "../../services/api/apiAuth";
 import {getCookie} from "../../services/utils";
 import {IButton, IPrevent, ITargetValue} from "../../services/utils/types";
@@ -37,12 +36,10 @@ export const Profile = () => {
     const accessToken: string | undefined = getCookie('accessToken')
     const logOut = (e: IPrevent) => {
         e.preventDefault();
-        // @ts-ignore
         return dispatch(logout(getCookie("token")));
     };
     const saveUserInfo = (e: IPrevent) => {
         e.preventDefault();
-        // @ts-ignore
         return dispatch(updateUser(form));
     };
     const onChange = (e: ITargetValue) => {
@@ -80,12 +77,9 @@ export const Profile = () => {
     };
 
     useEffect(() => {
-        // @ts-ignore
-        dispatch(getFeed());
         setValue({...form, name: user.name, login: user.email});
         if (accessToken) {
             let authToken = accessToken.split('Bearer ')[1];
-            // @ts-ignore
             dispatch(getUser(accessToken));
             dispatch({
                 type: WS_CONNECTION_START,
@@ -96,7 +90,6 @@ export const Profile = () => {
             }
         } else {
             console.log('needRefresh')
-            // @ts-ignore
             dispatch(getToken());
             // @ts-ignore
             loader && dispatch(getUser(accessToken));
@@ -104,8 +97,7 @@ export const Profile = () => {
 
     }, [user.name, user.email, accessToken]);
     useEffect(() => {
-        // @ts-ignore
-        // dispatch(getToken())
+        dispatch(getToken())
         dispatch({
             type: IS_AUTH,
         });

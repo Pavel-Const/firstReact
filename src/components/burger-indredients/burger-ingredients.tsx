@@ -3,7 +3,6 @@ import React, {useEffect, useState} from "react";
 import ingredientStyles from "./burger-ingredients.module.css";
 import {Tab as TabUI} from "@ya.praktikum/react-developer-burger-ui-components";
 import {IngredientBlock} from "../ingredients-block/ingredient-block";
-import {getFeed} from "../../services/api/apiIngredients";
 import {ingredientTypeReq, TRef} from "../../services/utils/types";
 import {useDispatch, useSelector} from "../../index";
 
@@ -19,10 +18,6 @@ export const BurgerIngredients = () => {
         onClick: (value: string) => void;
         children: React.ReactNode;
     }> = TabUI;
-    useEffect(() => {
-        // @ts-ignore
-        dispatch(getFeed());
-    }, [dispatch]);
 
     const dataBun: Array<ingredientTypeReq> = [],
         dataMain: Array<ingredientTypeReq> = [],

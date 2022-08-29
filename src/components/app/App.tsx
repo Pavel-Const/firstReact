@@ -27,6 +27,7 @@ import {ProtectedRoute} from "../protected-route/protected-route";
 import {Feed} from "../feed/feed";
 import {FeedDetail} from "../feed-detail/feed-detail";
 import {useDispatch, useSelector} from "../../index";
+import {getFeed} from "../../services/api/apiIngredients";
 
 interface ILocation {
     background?: Location
@@ -51,6 +52,9 @@ const App = () => {
     const {open, kind, order} = useSelector(
         (store) => store.reduceOrder.modalInfo
     );
+    useEffect(() => {
+        dispatch(getFeed());
+    }, []);
     return (
         <div className="App">
             <AppHeader/>

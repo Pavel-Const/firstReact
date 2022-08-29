@@ -35,9 +35,9 @@ export const wsActions = {
     onError: WS_CONNECTION_ERROR,
     onMessage: WS_GET_MESSAGE
 };
-
+export type AppDispatch = ThunkDispatch<RootState, never, TActions>;
 export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch;
+//export type AppDispatch = typeof store.dispatch;
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, // return value type
     RootState,
