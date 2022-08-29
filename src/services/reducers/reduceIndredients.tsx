@@ -7,10 +7,11 @@ import {
     COUNTER_CONSTRUCTOR_ITEM,
     CHANGE_PRODUCT_CONSTRUCTOR, TActionsIngredients,
 } from "../actions/actionsIngredients";
+import {ingredientTypeReq} from "../utils/types";
 
 type TInitialState = {
     ingredientList: {
-        ingredientData: any[],
+        ingredientData: Array<ingredientTypeReq>,
         load: boolean,
         counter?: any[],
     },

@@ -29,7 +29,7 @@ export const FeedBlock = (props: { path: string, title: string }) => {
                 {props.title}
             </h1>
             <div className={[styles.list, "scrollCustom"].join(" ")}>
-                {load && orders.map((item: any) => {
+                {load && orders.map((item) => {
                     let orderIngredients = item.ingredients.map((item: string) => {
                         return ingredientData.find((ingredient: { _id: string; }) => item === ingredient._id)
                     })

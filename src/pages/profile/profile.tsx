@@ -78,7 +78,6 @@ export const Profile = () => {
         setChangeFieldPass(!changeFieldPass);
         onEditFocus(inputRefPassword)
     };
-    const location = useLocation();
 
     useEffect(() => {
         // @ts-ignore
@@ -90,7 +89,7 @@ export const Profile = () => {
             dispatch(getUser(accessToken));
             dispatch({
                 type: WS_CONNECTION_START,
-                url: wsUrlAuth
+                url: `${wsUrlAuth}${authToken}`
             });
             return () => {
                 dispatch({type: WS_CONNECTION_CLOSE});
@@ -106,10 +105,11 @@ export const Profile = () => {
     }, [user.name, user.email, accessToken]);
     useEffect(() => {
         // @ts-ignore
-        dispatch(getToken())
+        // dispatch(getToken())
         dispatch({
             type: IS_AUTH,
         });
+
     }, []);
     if (!userAuth) {
         return (

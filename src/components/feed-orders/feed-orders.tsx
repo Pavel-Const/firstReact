@@ -8,7 +8,7 @@ export const FeedOrders = () => {
     const {orders, total, totalToday} = useSelector(
         (store) => store.reducerWs
     );
-    let done: any[] = []
+    let done: number[] = []
     orders.forEach((item: { status: string; number: number; }) => {
         if (item.status === 'done') {
             done.push(item.number)

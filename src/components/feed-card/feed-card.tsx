@@ -3,17 +3,16 @@ import React from "react";
 import styles from "./feed-card.module.css";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import {Link, useLocation} from "react-router-dom";
+import {ingredientTypeReq} from "../../services/utils/types";
 
 
-export const FeedCard = (props: { path: string; id: string; orderIngredients: any[]; item: { number: number, createdAt: string, name: string, _id: [] } }) => {
+export const FeedCard = (props: { path: string; id: string; orderIngredients: Array<ingredientTypeReq>; item: { number: number, createdAt: string, name: string, _id: [] } }) => {
     const location = useLocation();
-    let totalPriceArr: [] = [];
-    props.orderIngredients.forEach((item: any) => {
-        if (item !== undefined) {
-            // @ts-ignore
-            return totalPriceArr.push(item.price);
-        }
+    let totalPriceArr: number[] = [];
+    props.orderIngredients.forEach((item) => {
+        return totalPriceArr.push(item.price);
     })
+
     // @ts-ignore
     let totalPrice = totalPriceArr.reduce((a, b) => a + b)
     let date = new Date(props.item.createdAt)

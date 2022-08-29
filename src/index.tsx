@@ -28,7 +28,7 @@ export type TActions =
     | TActionsOrder
     | TActionsIngredients
     | TActionsAuthorization
-const wsActions = {
+export const wsActions = {
     wsInit: WS_CONNECTION_START,
     onOpen: WS_CONNECTION_SUCCESS,
     onClose: WS_CONNECTION_CLOSE,
