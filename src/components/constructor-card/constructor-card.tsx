@@ -1,5 +1,4 @@
 import React, {FC, useRef} from "react";
-import {useDispatch} from "react-redux";
 import styles from "./constructor-card.module.css";
 import {
     ConstructorElement,
@@ -11,11 +10,12 @@ import {
 } from "../../services/actions/actionsIngredients";
 import {ingredientType} from "../../services/utils/types";
 import {useDrag, useDrop, XYCoord} from "react-dnd";
+import {useDispatch} from "../../index";
 
 export const ConstructorCard: FC<ingredientType & {
     group?: string,
     isLocked?: boolean,
-    index?: number,
+    index: number,
 }> = (props) => {
     const ref = useRef<HTMLDivElement>(null);
     const [{isDrag}, dragref] = useDrag({

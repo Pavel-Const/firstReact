@@ -1,6 +1,4 @@
 import React, {useEffect} from "react";
-import {useSelector, useDispatch} from "react-redux";
-import {getFeed} from "../../services/api/api";
 import {useDrop} from "react-dnd";
 import shortid from "shortid";
 
@@ -17,12 +15,14 @@ import {
     ConstructorEmptyBottom,
     ConstructorEmptyTop,
 } from "../constructor-empty/constructor-empty";
+import {useDispatch, useSelector} from "../../index";
+import {ingredientTypeReq} from "../../services/utils/types";
 
 export const BurgerConstructor = () => {
     const {ingredientList, ingredientListConstructor} = useSelector(
-        (store: any) => store.reduceIngredients
+        (store) => store.reduceIngredients
     );
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         let arr: number[] = [];
@@ -56,7 +56,7 @@ export const BurgerConstructor = () => {
 
     const [, dropTarget] = useDrop({
         accept: "product",
-        drop(item: any) {
+        drop(item: { id: string, type: string }) {
             dispatch({
                 type: ADD_PRODUCT_CONSTRUCTOR,
                 id: item.id,
@@ -65,10 +65,6 @@ export const BurgerConstructor = () => {
             });
         },
     });
-
-    useEffect(() => {
-        dispatch(getFeed());
-    }, []);
 
     let arrayId: string[] = [];
     ingredientListConstructor.other.forEach((item: { _id: string }) => {
@@ -89,6 +85,7 @@ export const BurgerConstructor = () => {
                                 price={ingredientListConstructor.buns[0].price}
                                 src={ingredientListConstructor.buns[0].image}
                                 type="top"
+                                index={0}
                             />
                         ) : (
                             <ConstructorEmptyTop name={`Булка (верх)`}/>
@@ -102,7 +99,7 @@ export const BurgerConstructor = () => {
                         >
                             {ingredientListConstructor.other.length ? (
                                 ingredientListConstructor.other.map(
-                                    (item: any, index: number) => (
+                                    (item: ingredientTypeReq, index: number) => (
                                         <ConstructorCard
                                             key={item.newId}
                                             index={index}
@@ -125,6 +122,7 @@ export const BurgerConstructor = () => {
                                 price={ingredientListConstructor.buns[0].price}
                                 src={ingredientListConstructor.buns[0].image}
                                 type="bottom"
+                                index={0}
                             />
                         ) : (
                             <ConstructorEmptyBottom name={`Булка (низ)`}/>

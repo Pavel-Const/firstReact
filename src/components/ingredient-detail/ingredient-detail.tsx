@@ -1,34 +1,20 @@
 import styles from "./ingredient-detail.module.css";
-import PropTypes from "prop-types";
-import React, {useEffect} from "react";
+import React from "react";
 import {
-    useHistory,
-    useLocation,
-    useParams,
-    useRouteMatch,
+    useParams
 } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {getFeed} from "../../services/api/api";
+import {useSelector} from "../../index";
 
 export const IngredientDetails = () => {
     const {ingredientData, load} = useSelector(
-        (store: any) => store.reduceIngredients.ingredientList
+        (store) => store.reduceIngredients.ingredientList
     );
     const {id} = useParams<{ id?: string }>();
-    const dispatch: any = useDispatch();
-    const history = useHistory();
-
-    useEffect(() => {
-        if (history.action === "POP") {
-            dispatch(getFeed());
-        }
-    }, [dispatch]);
-
     const product = ingredientData.filter((item: { _id: string }) => {
         return item._id === id;
     });
     return (
-        load && (
+        load ? (
             <>
                 <div className={[styles.content, "pb-5"].join(" ")}>
                     <img
@@ -73,7 +59,7 @@ export const IngredientDetails = () => {
                     </div>
                 </div>
             </>
-        )
+        ) : null
     );
 };
 

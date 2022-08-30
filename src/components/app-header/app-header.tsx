@@ -31,14 +31,22 @@ function AppHeader() {
                             Конструктор
                         </HeaderButton>
                     </Link>
-                    <HeaderButton
-                        styles={
-                            "text text_type_main-default text_color_inactive"
-                        }
-                    >
-                        <ListIcon type="secondary"/>
-                        Лента заказов
-                    </HeaderButton>
+                    <Link to={"/feed"}>
+                        <HeaderButton
+                            styles={
+                                pathname === "/feed"
+                                    ? "text text_type_main-default"
+                                    : "text text_type_main-default  text_color_inactive"
+                            }
+                        >
+                            <ListIcon
+                                type={
+                                    pathname === "/feed" ? "primary" : "secondary"
+                                }
+                            />{" "}
+                            Лента заказов
+                        </HeaderButton>
+                    </Link>
                 </div>
                 <Link to={'/'} className={headerStyles.logo}>
                     <Logo/>

@@ -1,6 +1,16 @@
-import {GET_ORDER_INFO, CLOSE_MODAL} from "../actions/actionsOrder";
+import {GET_ORDER_INFO, CLOSE_MODAL, TActionsOrder} from "../actions/actionsOrder";
 
-const initialState = {
+type TInitialState = {
+    modalInfo: {
+        open: boolean,
+        kind?: string,
+        title?: string,
+        ingredientItem?: {},
+        order: string,
+    },
+}
+
+const initialState: TInitialState = {
     modalInfo: {
         open: false,
         kind: "",
@@ -10,7 +20,8 @@ const initialState = {
     },
 };
 
-export const reduceOrder = (state = initialState, action) => {
+
+export const reduceOrder = (state = initialState, action: TActionsOrder): TInitialState => {
     switch (action.type) {
         case GET_ORDER_INFO: {
             return {

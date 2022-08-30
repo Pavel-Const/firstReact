@@ -2,11 +2,11 @@ import styles from "./authorization.module.css";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useLocation} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {login} from "../../services/api/api";
+import {login} from "../../services/api/apiAuth";
 import {IS_AUTH} from "../../services/actions/actionsAuthorization";
 import {IButton, IPrevent, ITargetValue} from "../../services/utils/types";
 import {Button as ButtonUI} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/button";
+import {useDispatch, useSelector} from "../../index";
 
 type TFormState = {
     email: string
@@ -22,8 +22,8 @@ interface ILocation {
 export const Login = () => {
     const [form, setValue] = useState<TFormState>({email: "", password: ""});
     const [visiblePassword, setVisible] = useState(false);
-    const dispatch: any = useDispatch();
-    const {userAuth} = useSelector((store: any) => store.reduceAuthorization);
+    const dispatch = useDispatch();
+    const {userAuth} = useSelector((store) => store.reduceAuthorization);
     const location = useLocation<ILocation>();
     const Button: React.FC<IButton> = ButtonUI;
     const onChange = (e: ITargetValue) => {

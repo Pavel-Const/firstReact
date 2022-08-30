@@ -1,6 +1,6 @@
-import {Redirect, Route} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {Redirect, Route, RouteProps} from "react-router-dom";
 import {FC, ReactNode} from "react";
+import {useSelector} from "../../index";
 
 interface IProps {
     children: ReactNode
@@ -8,12 +8,13 @@ interface IProps {
     exact: true
 }
 
-export const ProtectedRoute: FC<IProps> = ({children, ...rest}) => {
-    const {userAuth} = useSelector((store: any) => store.reduceAuthorization);
+export const ProtectedRoute: FC<RouteProps> = ({children, ...rest}) => {
+    const {userAuth} = useSelector((store) => store.reduceAuthorization);
 
     return (
         <Route
             {...rest}
+            // @ts-ignore
             render={({location}) =>
                 userAuth ? (
                     children

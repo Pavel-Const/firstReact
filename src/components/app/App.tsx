@@ -1,5 +1,5 @@
 /* eslint-disable default-case */
-import React from "react";
+import React, {useEffect} from "react";
 import {
     Redirect,
     Route,
@@ -13,7 +13,6 @@ import {BurgerIngredients} from "../burger-indredients/burger-ingredients";
 import {BurgerConstructor} from "../burger-constructor/burger-constructor";
 import {OrderDetails} from "../order-detail/order-detail";
 import {IngredientDetails} from "../ingredient-detail/ingredient-detail";
-import {useDispatch, useSelector} from "react-redux";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import Modal from "../modal/modal";
@@ -25,11 +24,14 @@ import {ForgotPassword} from "../../pages/authorization/forgot-password";
 import {ResetPassword} from "../../pages/authorization/reset-password";
 import {Profile} from "../../pages/profile/profile";
 import {ProtectedRoute} from "../protected-route/protected-route";
+import {Feed} from "../feed/feed";
+import {FeedDetail} from "../feed-detail/feed-detail";
+import {useDispatch, useSelector} from "../../index";
+import {getFeed} from "../../services/api/apiIngredients";
 
 interface ILocation {
     background?: Location
 }
-
 
 const App = () => {
     const dispatch = useDispatch();
@@ -48,8 +50,11 @@ const App = () => {
         });
     };
     const {open, kind, order} = useSelector(
-        (store: any) => store.reduceOrder.modalInfo
+        (store) => store.reduceOrder.modalInfo
     );
+    useEffect(() => {
+        dispatch(getFeed());
+    }, []);
     return (
         <div className="App">
             <AppHeader/>
@@ -77,24 +82,51 @@ const App = () => {
                 <Route path={"/ingredients/:id"} exact>
                     <IngredientDetails/>
                 </Route>
+                <Route path={"/feed"} exact>
+                    <Feed/>
+                </Route>
+                <Route path={"/feed/:id"} exact>
+                    <FeedDetail type={'feed'}/>
+                </Route>
                 <ProtectedRoute path={"/profile"} exact>
                     <Profile/>
                 </ProtectedRoute>
                 <ProtectedRoute path={"/profile/orders"} exact>
                     <Profile/>
                 </ProtectedRoute>
+                <ProtectedRoute path={"/profile/orders/:id"} exact>
+                    <FeedDetail type={'lc'}/>
+                </ProtectedRoute>
             </Switch>
 
             {background && (
-                <Route path={"/ingredients/:id"}>
-                    <Modal
-                        title={"Детали ингредиента"}
-                        isOpen={background}
-                        closeModal={closeModal}
-                    >
-                        <IngredientDetails/>
-                    </Modal>
-                </Route>
+                <>
+                    <Route path={"/ingredients/:id"}>
+                        <Modal
+                            title={"Детали ингредиента"}
+                            isOpen={background}
+                            closeModal={closeModal}
+                        >
+                            <IngredientDetails/>
+                        </Modal>
+                    </Route>
+                    <Route path={"/feed/:id"}>
+                        <Modal
+                            isOpen={background}
+                            closeModal={closeModal}
+                        >
+                            <FeedDetail type={'feed'}/>
+                        </Modal>
+                    </Route>
+                    <ProtectedRoute path={"/profile/orders/:id"} exact>
+                        <Modal
+                            isOpen={background}
+                            closeModal={closeModal}
+                        >
+                            <FeedDetail type={'lc'}/>
+                        </Modal>
+                    </ProtectedRoute>
+                </>
             )}
             {open && (
                 <Modal isOpen={open} closeModal={closeModalOrder}>

@@ -1,21 +1,22 @@
 import React, {SyntheticEvent, useEffect} from "react";
 import styles from "./constructor-order.module.css";
-import {useDispatch, useSelector} from "react-redux";
-import {getOrderInfo} from "../../services/api/api";
+import {getOrderInfo} from "../../services/api/apiOrders";
 import {
     CurrencyIcon,
     Button as ButtonUI
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import {GET_TOTAL_PRICE} from "../../services/actions/actionsIngredients";
 import {useHistory} from "react-router-dom";
+import {useDispatch, useSelector} from "../../index";
 
 export const ConstructorOrder = (props: { id: Array<string> }) => {
     const {totalPrice, ingredientListConstructor} = useSelector(
-        (store: any) => store.reduceIngredients
+        (store) => store.reduceIngredients
     );
-    const {userAuth} = useSelector((store: any) => store.reduceAuthorization);
+    const {userAuth, accessToken} = useSelector((store) => store.reduceAuthorization);
+
     const history = useHistory();
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const Button: React.FC<{
         type?: 'secondary' | 'primary';
         size?: 'small' | 'medium' | 'large';
@@ -32,7 +33,7 @@ export const ConstructorOrder = (props: { id: Array<string> }) => {
     }, [ingredientListConstructor]);
     const open = () => {
         if (ingredientListConstructor.buns.length && userAuth) {
-            return dispatch(getOrderInfo(props.id));
+            return dispatch(getOrderInfo(props.id, accessToken));
         } else {
             history.replace({
                 pathname: "/login",
