@@ -1,18 +1,11 @@
 import * as types from '../actions/actionsOrder'
-import {reduceOrder} from "./reduceOrder";
-import {CLOSE_MODAL, GET_ORDER_INFO} from "../actions/actionsOrder";
+import {reduceOrder, initialState} from "./reduceOrder";
 
 describe('ORDER reducer', () => {
     it('should return the initial state', () => {
         expect(reduceOrder(undefined, {})).toEqual(
             {
-                modalInfo: {
-                    open: false,
-                    kind: "",
-                    title: "",
-                    ingredientItem: {},
-                    order: "",
-                },
+                ...initialState
             }
         )
     })

@@ -23,11 +23,11 @@ const Modal: FC<IModal> = (props) => {
 
         if (isOpen) {
             document.addEventListener("keydown", closeByEscape);
-            (document.querySelector("body") as HTMLElement).classList.add("modalOpen");
+            document.body.classList.add("modalOpen");
 
             return () => {
                 document.removeEventListener("keydown", closeByEscape);
-                (document.querySelector("body") as HTMLElement).classList.remove("modalOpen");
+                document.body.classList.remove("modalOpen");
             };
         }
     }, [isOpen]);

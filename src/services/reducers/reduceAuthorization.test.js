@@ -1,28 +1,12 @@
 import * as types from '../actions/actionsAuthorization'
-import {reduceOrder} from "./reduceOrder";
-import {CLOSE_MODAL, GET_ORDER_INFO} from "../actions/actionsOrder";
-import {reduceAuthorization} from "./reduceAuthorization";
-import {
-    AUTH_LOGIN,
-    AUTH_LOGOUT,
-    AUTH_REGISTER,
-    AUTH_TOKEN,
-    IS_AUTH, RESET_PASSWORD,
-    UPDATE_USER_INFO
-} from "../actions/actionsAuthorization";
+import {reduceAuthorization, initialState} from "./reduceAuthorization";
+
 
 describe('AUTH reducer', () => {
     it('should return the initial state', () => {
         expect(reduceAuthorization(undefined, {})).toEqual(
             {
-                user: {
-                    name: "",
-                    email: "",
-                },
-                accessToken: '',
-                loader: false,
-                userAuth: false,
-                passReset: false,
+                ...initialState
             }
         )
     })

@@ -1,20 +1,11 @@
 import {reducerWs, initialState} from "./reducerWs";
-import {
-    ADD_PRODUCT_CONSTRUCTOR, CHANGE_PRODUCT_CONSTRUCTOR, COUNTER_CONSTRUCTOR_ITEM, DELETE_CONSTRUCTOR_ITEM,
-    GET_INGREDIENT_INFO,
-    GET_INGREDIENTS_LIST,
-    GET_TOTAL_PRICE
-} from "../actions/actionsIngredients";
+
 import {WS_CONNECTION_CLOSE, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE} from "../actions/actionsWs";
 
 describe('WS reducer', () => {
     it('should return the initial state', () => {
         expect(reducerWs(undefined, {})).toEqual({
-            wsConnected: false,
-            getData: false,
-            orders: [],
-            total: null,
-            totalToday: null
+            ...initialState
         })
     })
 

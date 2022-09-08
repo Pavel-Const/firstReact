@@ -20,7 +20,7 @@ type TUserState = {
     userAuth?: string | boolean,
     passReset?: boolean,
 };
-const initialState: TUserState = {
+export const initialState: TUserState = {
     user: {
         name: "",
         email: "",
