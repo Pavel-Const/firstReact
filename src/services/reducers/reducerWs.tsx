@@ -13,7 +13,7 @@ type TInitialState = {
     totalToday: null | number
 }
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
     wsConnected: false,
     getData: false,
     orders: [],

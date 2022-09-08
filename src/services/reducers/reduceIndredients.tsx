@@ -27,7 +27,7 @@ type TInitialState = {
         ingredientItem: any[]
     },
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
     ingredientList: {
         ingredientData: [],
         load: false,

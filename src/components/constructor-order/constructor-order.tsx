@@ -54,7 +54,7 @@ export const ConstructorOrder = (props: { id: Array<string> }) => {
                 </span>
                 <CurrencyIcon type="primary"/>
             </div>
-            <Button onClick={open} type="primary" size="large">
+            <Button onClick={open} type="primary" size="large" data-testid='order-btn'>
                 Оформить заказ
             </Button>
         </div>

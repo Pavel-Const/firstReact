@@ -20,7 +20,7 @@ type TUserState = {
     userAuth?: string | boolean,
     passReset?: boolean,
 };
-const initialState: TUserState = {
+export const initialState: TUserState = {
     user: {
         name: "",
         email: "",
@@ -54,7 +54,6 @@ export const reduceAuthorization = (state = initialState, action: TActionsAuthor
                 userAuth: true,
             };
         case AUTH_LOGOUT:
-            console.log('logout')
             return {
                 ...state,
                 userAuth: false

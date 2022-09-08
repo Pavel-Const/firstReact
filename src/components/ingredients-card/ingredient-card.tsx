@@ -38,7 +38,9 @@ export const IngredientCard: FC<ingredientType & { id: string, typeIng: string }
                 pathname: `/ingredients/${props.id}`,
                 state: {background: location},
             }}
-            className={styles.card}
+            className={[styles.card, "link"].join(
+                " "
+            )}
             ref={dragRef}
         >
             <img src={props.src} alt={props.name} className={styles.image}/>

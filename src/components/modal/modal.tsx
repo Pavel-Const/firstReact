@@ -23,11 +23,11 @@ const Modal: FC<IModal> = (props) => {
 
         if (isOpen) {
             document.addEventListener("keydown", closeByEscape);
-            (document.querySelector("body") as HTMLElement).classList.add("modalOpen");
+            document.body.classList.add("modalOpen");
 
             return () => {
                 document.removeEventListener("keydown", closeByEscape);
-                (document.querySelector("body") as HTMLElement).classList.remove("modalOpen");
+                document.body.classList.remove("modalOpen");
             };
         }
     }, [isOpen]);
@@ -38,13 +38,13 @@ const Modal: FC<IModal> = (props) => {
                     <h2
                         className={[
                             modalStyles.title,
-                            "text text_type_main-large",
+                            "text text_type_main-large title_modal",
                         ].join(" ")}
                     >
                         {props.title}
                     </h2>
                     <button
-                        className={modalStyles.btnClose}
+                        className={[modalStyles.btnClose, 'modal_close'].join(" ")}
                         onClick={props.closeModal}
                     >
                         <CloseIcon type="primary"/>

@@ -37,7 +37,6 @@ export const wsActions = {
 };
 export type AppDispatch = ThunkDispatch<RootState, never, TActions>;
 export type RootState = ReturnType<typeof store.getState>
-//export type AppDispatch = typeof store.dispatch;
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, // return value type
     RootState,
@@ -52,7 +51,7 @@ const store = createStore(rootReducer, compose(applyMiddleware(thunk), applyMidd
 
 
 root.render(
-    <Router>
+    <Router basename='/firstReact'>
         <React.StrictMode>
             <Provider store={store}>
                 <App/>
