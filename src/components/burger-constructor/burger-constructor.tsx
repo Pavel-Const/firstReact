@@ -93,7 +93,7 @@ export const BurgerConstructor = () => {
                         <div
                             className={[
                                 constructorStyles.box,
-                                "scrollCustom",
+                                "scrollCustom constructor_test",
                             ].join(" ")}
                             ref={dropTarget}
                         >

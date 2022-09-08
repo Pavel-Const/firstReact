@@ -54,7 +54,6 @@ export const reduceAuthorization = (state = initialState, action: TActionsAuthor
                 userAuth: true,
             };
         case AUTH_LOGOUT:
-            console.log('logout')
             return {
                 ...state,
                 userAuth: false

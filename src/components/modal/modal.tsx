@@ -38,13 +38,13 @@ const Modal: FC<IModal> = (props) => {
                     <h2
                         className={[
                             modalStyles.title,
-                            "text text_type_main-large",
+                            "text text_type_main-large title_modal",
                         ].join(" ")}
                     >
                         {props.title}
                     </h2>
                     <button
-                        className={modalStyles.btnClose}
+                        className={[modalStyles.btnClose, 'modal_close'].join(" ")}
                         onClick={props.closeModal}
                     >
                         <CloseIcon type="primary"/>

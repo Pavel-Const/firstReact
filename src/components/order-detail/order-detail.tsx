@@ -8,7 +8,7 @@ export const OrderDetails = (props: { number: string }) => {
             <h2
                 className={[
                     orderStyles.idNum,
-                    "text text_type_digits-large mt-4",
+                    "text text_type_digits-large mt-4 order_num",
                 ].join(" ")}
             >
                 {props.number}
